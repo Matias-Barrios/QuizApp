@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Linux Quiz</title>
+  <meta name="description" content="Linux Quiz">
+  <meta name="author" content="Matias Barrios">
+  <link rel="stylesheet" href="css/styles.css?v=1.0">
+</head>
+<body>
+    <form action="/auth" method="post">
+        <div class="container">
+          <label for="username"><b>Username</b></label>
+          <input type="text" placeholder="Enter Username" name="uname" required>
+      
+          <label for="password"><b>Password</b></label>
+          <input type="password" placeholder="Enter Password" name="psw" required>
+      
+          <button type="submit">Login</button>
+          <label>
+            <input type="checkbox" checked="checked" name="remember"> Remember me
+          </label>
+        </div>
+    </form>
+</body>
+</html>
