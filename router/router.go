@@ -41,9 +41,7 @@ func TokenHandler(w http.ResponseWriter, r *http.Request) {
 	username := r.Form.Get("username")
 	password := r.Form.Get("password")
 	if username != "myusername" || password != "mypassword" {
-		w.WriteHeader(http.StatusUnauthorized)
-		io.WriteString(w, `{"error":"invalid_credentials"}`)
-		return
+		http.Redirect(w, r, "/login", 302)
 	}
 
 	// We are happy with the credentials, so build a token. We've given it
