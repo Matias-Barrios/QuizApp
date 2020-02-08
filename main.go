@@ -4,8 +4,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/Matias/QuizApp/config"
-	"github.com/Matias/QuizApp/router"
+	"github.com/Matias-Barrios/QuizApp/config"
+	"github.com/Matias-Barrios/QuizApp/router"
 )
 
 func main() {

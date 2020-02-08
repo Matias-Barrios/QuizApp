@@ -1,26 +1,25 @@
 package router
 
 import (
-	"io"
-	"log"
+	"encoding/json"
+	"fmt"
 	"net/http"
 	"time"
 
-	homeV "github.com/Matias/QuizApp/views/view_index"
-	loginV "github.com/Matias/QuizApp/views/view_login"
-	jwtmiddleware "github.com/auth0/go-jwt-middleware"
+	homeV "github.com/Matias-Barrios/QuizApp/views/view_index"
+	loginV "github.com/Matias-Barrios/QuizApp/views/view_login"
 	"github.com/dgrijalva/jwt-go"
 )
 
 const (
-	APP_KEY = "golangcode.com"
+	APP_KEY = "secret"
 )
 
 // GetRouter :
 func GetRouter() *http.ServeMux {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/login", loginHandler)
-	mux.Handle("/index", AuthMiddleware(http.HandlerFunc(loginHandler)))
+	mux.Handle("/index", AuthMiddleware(http.HandlerFunc(indexHandler)))
 	mux.HandleFunc("/auth", TokenHandler)
 	return mux
 }
@@ -42,6 +41,7 @@ func TokenHandler(w http.ResponseWriter, r *http.Request) {
 	password := r.Form.Get("password")
 	if username != "myusername" || password != "mypassword" {
 		http.Redirect(w, r, "/login", 302)
+		return
 	}
 
 	// We are happy with the credentials, so build a token. We've given it
@@ -53,23 +53,38 @@ func TokenHandler(w http.ResponseWriter, r *http.Request) {
 	})
 	tokenString, err := token.SignedString([]byte(APP_KEY))
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		io.WriteString(w, `{"error":"token_generation_failed"}`)
+		http.Redirect(w, r, "/login", 302)
 		return
 	}
-	io.WriteString(w, `{"token":"`+tokenString+`"}`)
+	cookie := http.Cookie{
+		Name:    "jwt",
+		Value:   tokenString,
+		Expires: time.Now().AddDate(0, 0, 1),
+	}
+	http.SetCookie(w, &cookie)
+	http.Redirect(w, r, "/index", 302)
 	return
 }
 
 func AuthMiddleware(next http.Handler) http.Handler {
-	if len(APP_KEY) == 0 {
-		log.Fatal("HTTP server unable to start, expected an APP_KEY for JWT auth")
-	}
-	jwtMiddleware := jwtmiddleware.New(jwtmiddleware.Options{
-		ValidationKeyGetter: func(token *jwt.Token) (interface{}, error) {
-			return []byte(APP_KEY), nil
-		},
-		SigningMethod: jwt.SigningMethodHS256,
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		auth, err := r.Cookie("jwt")
+		if err != nil {
+			http.Redirect(w, r, "/login", 302)
+			return
+		}
+		token, error := jwt.Parse(auth.Value, func(token *jwt.Token) (interface{}, error) {
+			if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+				return nil, fmt.Errorf("Internal server error")
+			}
+			return []byte("secret"), nil
+		})
+		if error != nil {
+			json.NewEncoder(w).Encode("Internal server error")
+			return
+		}
+		if token.Valid {
+			next.ServeHTTP(w, r)
+		}
 	})
-	return jwtMiddleware.Handler(next)
 }
