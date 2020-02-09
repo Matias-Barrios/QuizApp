@@ -22,7 +22,7 @@ func TokenHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"user": username,
-		"exp":  time.Now().Add(time.Minute * time.Duration(3)).Unix(),
+		"exp":  time.Now().Add(time.Minute * time.Duration(800)).Unix(),
 		"iat":  time.Now().Unix(),
 	})
 	tokenString, err := token.SignedString([]byte(APP_KEY))
