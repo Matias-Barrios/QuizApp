@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Linux Quiz</title>
+    <meta name="description" content="Linux Quiz">
+    <meta name="author" content="Matias Barrios">
+    <link rel="stylesheet" href="static/style.css">
+    <link rel="stylesheet" href="static/loginV/style.css">
+    <link rel="stylesheet" href="static/bootstrap/css/bootstrap.css">
+    <script src="static/bootstrap/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <div id="logo_container">
+        <img src="static/images/logo_quiz_app.png"></img>
+
+        <form action="/auth" method="post">
+            <div class="login_container">
+                <p>
+                    <label for="username"><b>Username</b></label>
+                    <input type="text" placeholder="Enter Username" name="username" required>
+                </p>
+                <p>
+                    <label for="password"><b>Password</b></label>
+                    <input type="password" placeholder="Enter Password" name="password" required>
+                </p>
+                <p>
+                    <button type="submit" class="q-button">Login</button>
+                    <input type="checkbox" checked="checked" name="remember"> Remember Me!
+                </p>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
