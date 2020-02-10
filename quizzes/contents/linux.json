@@ -1,0 +1,12 @@
+{
+    "author" : "Matias Barrios",
+    "description" : "First Linux quiz for testing",
+    "questions" : [
+        {
+            "mode" : "single",
+            "question" : "Which of these commands is useful to see the amount of free RAM?",
+            "options" : ["ls -lh", "du -s", "df -h" , "free -h"],
+            "anwers" : ["3"]
+        }
+    ]
+}

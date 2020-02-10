@@ -2,9 +2,11 @@ package router
 
 import (
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/Matias-Barrios/QuizApp/models"
+	quizzes "github.com/Matias-Barrios/QuizApp/quizzes"
 	homeV "github.com/Matias-Barrios/QuizApp/views"
 	loginV "github.com/Matias-Barrios/QuizApp/views"
 )
@@ -16,10 +18,36 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/login", 302)
 		return
 	}
-	u := &models.User{
+	var offset int
+	var offsetv int64
+	keys, ok := r.URL.Query()["offset"]
+	if !ok || len(keys[0]) < 1 {
+		offset = 0
+	}
+	if len(keys) > 0 {
+		offsetv, err = strconv.ParseInt(keys[0], 10, 64)
+	} else {
+		offset = 0
+	}
+
+	if err != nil {
+		offset = 0
+	} else {
+		offset = int(offsetv)
+	}
+	qs, err := quizzes.GetQuizzes(offset)
+	if err != nil {
+		http.Redirect(w, r, "/login", 302)
+		return
+	}
+	u := models.User{
 		Name: username.Value,
 	}
-	homeV.ViewIndex.Execute(w, u)
+	envelope := models.HomeEnvelope{
+		User:    u,
+		Quizzes: qs,
+	}
+	homeV.ViewIndex.Execute(w, &envelope)
 }
 
 func loginHandler(w http.ResponseWriter, r *http.Request) {
