@@ -1,7 +1,6 @@
 package router
 
 import (
-	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -33,9 +32,15 @@ func TokenHandler(w http.ResponseWriter, r *http.Request) {
 	cookie := http.Cookie{
 		Name:    "token",
 		Value:   tokenString,
-		Expires: time.Now().Add(time.Minute * 1),
+		Expires: time.Now().Add(time.Minute * 800),
+	}
+	userCookie := http.Cookie{
+		Name:    "username",
+		Value:   username,
+		Expires: time.Now().Add(time.Minute * 800),
 	}
 	http.SetCookie(w, &cookie)
+	http.SetCookie(w, &userCookie)
 	http.Redirect(w, r, "/index", 302)
 	return
 }
@@ -55,8 +60,7 @@ func AuthMiddleware(next http.Handler) http.Handler {
 			return []byte("secret"), nil
 		})
 		if error != nil {
-
-			json.NewEncoder(w).Encode(error.Error())
+			http.Redirect(w, r, "/login", 302)
 			return
 		}
 		if token.Valid {

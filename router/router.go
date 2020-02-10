@@ -25,6 +25,7 @@ func GetRouter() *http.ServeMux {
 	mux.Handle("/index", AuthMiddleware(http.HandlerFunc(indexHandler)))
 	mux.HandleFunc("/auth", TokenHandler)
 	mux.HandleFunc("/favicon.ico", faviconHandler)
+	mux.HandleFunc("/logout", logoutHandler)
 
 	// Static files handling
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
