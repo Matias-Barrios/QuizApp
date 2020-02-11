@@ -65,3 +65,21 @@ func GetQuizzes(offset int) ([]models.Quiz, error) {
 	}
 	return quizzes, nil
 }
+
+// GetQuizzByID :
+func GetQuizzByID(id string) (models.Quiz, error) {
+	fd, err := os.Open(directory + "/" + id + ".json")
+	if err != nil {
+		return models.Quiz{}, err
+	}
+	data, err := ioutil.ReadAll(fd)
+	if err != nil {
+		return models.Quiz{}, err
+	}
+	var quizz models.Quiz
+	err = json.Unmarshal(data, &quizz)
+	if err != nil {
+		return models.Quiz{}, err
+	}
+	return quizz, err
+}

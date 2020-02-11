@@ -8,6 +8,7 @@ import (
 	"github.com/Matias-Barrios/QuizApp/models"
 	quizzes "github.com/Matias-Barrios/QuizApp/quizzes"
 	"github.com/Matias-Barrios/QuizApp/views"
+	"github.com/dgrijalva/jwt-go"
 )
 
 // Hanlders definitions
@@ -16,13 +17,10 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 		errorHandler(w, r, http.StatusNotFound)
 		return
 	}
-	username, err := r.Cookie("username")
-	if err != nil {
-		http.Redirect(w, r, "/login", 302)
-		return
-	}
+	claims := getClaims(w, r)
 	var offset int
 	var offsetv int64
+	var err error
 	keys, ok := r.URL.Query()["offset"]
 	if !ok || len(keys[0]) < 1 {
 		offset = 0
@@ -44,7 +42,7 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	u := models.User{
-		Name: username.Value,
+		Name: claims.Username,
 	}
 	envelope := models.HomeEnvelope{
 		User:    u,
@@ -83,9 +81,49 @@ func logoutHandler(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/login", 302)
 }
 
+func executeQuizzHanlder(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/execute" && r.Method != "GET" {
+		errorHandler(w, r, http.StatusNotFound)
+		return
+	}
+	claims := getClaims(w, r)
+	u := models.User{
+		Name: claims.Username,
+	}
+	keys, ok := r.URL.Query()["quizz"]
+	if !ok || len(keys) < 1 || len(keys[0]) < 1 {
+		errorHandler(w, r, http.StatusNotFound)
+		return
+	}
+	quizz, err := quizzes.GetQuizzByID(keys[0])
+	if err != nil {
+		errorHandler(w, r, http.StatusNotFound)
+		return
+	}
+	envelope := models.ExecuteQuizzEnvelope{
+		User: u,
+		Quiz: quizz,
+	}
+
+	views.ViewExecuteQuizz.Execute(w, &envelope)
+}
+
 func errorHandler(w http.ResponseWriter, r *http.Request, status int) {
 	w.WriteHeader(status)
 	if status == http.StatusNotFound {
 		views.View404.Execute(w, nil)
 	}
+}
+
+func getClaims(w http.ResponseWriter, r *http.Request) models.Claim {
+	token, err := r.Cookie("token")
+	if err != nil {
+		http.Redirect(w, r, "/login", 302)
+		return models.Claim{}
+	}
+	claims := &models.Claim{}
+	_, err = jwt.ParseWithClaims(token.Value, claims, func(token *jwt.Token) (interface{}, error) {
+		return APP_KEY, nil
+	})
+	return *claims
 }

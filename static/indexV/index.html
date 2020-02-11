@@ -24,14 +24,21 @@
         
         {{range $val := .Quizzes}}
             <div class="quizz">
-                <div>
+                <div class="quizz_info" >
                     <p><h3><u></s><b>Id :</b> {{ $val.ID}} </u></h1></p>
                     <p><b>Author :</b> {{ $val.Author}} </p>
                     <p><b>Description :</b> {{ $val.Description}} </p>
                     <p><b>Number of questions :</b> {{ len $val.Questions }} </p>
                 </div>
                 <div class="image_centered" >
-                    <img class="take_quizz" src="static/images/play_icon.png" />
+                    <a href="/execute?quizz={{ $val.ID }}">
+                        <img class="take_quizz" src="static/images/play_icon.png" />
+                    </a>
+                    {{ if $val.Completed }}
+                        <img class="take_quizz" src="static/images/play_icon.png" />
+                    {{ else }}
+                        <img class="take_quizz" src="static/images/play_icon.png" />
+                    {{ end }}
                 </div>
             </div>
         {{end}} 

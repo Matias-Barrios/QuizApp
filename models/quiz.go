@@ -14,4 +14,5 @@ type Quiz struct {
 	Description string     `json:"description"`
 	Author      string     `json:"author"`
 	Questions   []Question `json:"questions"`
+	Completed   bool       `json:"-"`
 }

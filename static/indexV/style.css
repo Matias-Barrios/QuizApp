@@ -27,13 +27,18 @@
     max-height: 80%;
 }
 
+.quizz_info {
+    flex : 0 80%;
+}
+
 .image_centered {
+    flex: 1 20%;
     float: right;
     text-align: center;
     width: 30%;
-    height: 100%;
 }
 
 img {
     display: inline-block;
 }
+

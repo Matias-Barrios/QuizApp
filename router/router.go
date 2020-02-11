@@ -23,8 +23,13 @@ func init() {
 // GetRouter :
 func GetRouter() *http.ServeMux {
 	mux := http.NewServeMux()
-	mux.HandleFunc("/login", loginHandler)
+
+	// Protected endpoints
 	mux.Handle("/index", AuthMiddleware(http.HandlerFunc(indexHandler)))
+	mux.Handle("/execute", AuthMiddleware(http.HandlerFunc(executeQuizzHanlder)))
+
+	// Unprotected endpoints
+	mux.HandleFunc("/login", loginHandler)
 	mux.HandleFunc("/auth", TokenHandler)
 	mux.HandleFunc("/favicon.ico", faviconHandler)
 	mux.HandleFunc("/logout", logoutHandler)

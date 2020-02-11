@@ -6,8 +6,12 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/Matias-Barrios/QuizApp/models"
 	"github.com/dgrijalva/jwt-go"
 )
+
+// Claims :
+var Claims models.Claim
 
 func TokenHandler(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/auth" && r.Method != "GET" {
@@ -22,11 +26,14 @@ func TokenHandler(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/login", 302)
 		return
 	}
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"user": username,
-		"exp":  time.Now().Add(time.Minute * time.Duration(800)).Unix(),
-		"iat":  time.Now().Unix(),
-	})
+	claims := &models.Claim{
+		Username: username,
+		StandardClaims: jwt.StandardClaims{
+			// In JWT, the expiry time is expressed as unix milliseconds
+			ExpiresAt: time.Now().Add(800 * time.Minute).Unix(),
+		},
+	}
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	tokenString, err := token.SignedString([]byte(APP_KEY))
 	if err != nil {
 		http.Redirect(w, r, "/login", 302)
@@ -37,13 +44,7 @@ func TokenHandler(w http.ResponseWriter, r *http.Request) {
 		Value:   tokenString,
 		Expires: time.Now().Add(time.Minute * 800),
 	}
-	userCookie := http.Cookie{
-		Name:    "username",
-		Value:   username,
-		Expires: time.Now().Add(time.Minute * 800),
-	}
 	http.SetCookie(w, &cookie)
-	http.SetCookie(w, &userCookie)
 	http.Redirect(w, r, "/index", 302)
 	return
 }
@@ -60,7 +61,7 @@ func AuthMiddleware(next http.Handler) http.Handler {
 				log.Println("Error decrypting token")
 				return nil, fmt.Errorf("Internal server error")
 			}
-			return []byte("secret"), nil
+			return []byte(APP_KEY), nil
 		})
 		if error != nil {
 			http.Redirect(w, r, "/login", 302)
