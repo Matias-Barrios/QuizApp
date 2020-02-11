@@ -7,12 +7,15 @@ import (
 
 	"github.com/Matias-Barrios/QuizApp/models"
 	quizzes "github.com/Matias-Barrios/QuizApp/quizzes"
-	homeV "github.com/Matias-Barrios/QuizApp/views"
-	loginV "github.com/Matias-Barrios/QuizApp/views"
+	"github.com/Matias-Barrios/QuizApp/views"
 )
 
 // Hanlders definitions
 func indexHandler(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/index" && r.Method != "GET" {
+		errorHandler(w, r, http.StatusNotFound)
+		return
+	}
 	username, err := r.Cookie("username")
 	if err != nil {
 		http.Redirect(w, r, "/login", 302)
@@ -47,18 +50,30 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 		User:    u,
 		Quizzes: qs,
 	}
-	homeV.ViewIndex.Execute(w, &envelope)
+	views.ViewIndex.Execute(w, &envelope)
 }
 
 func loginHandler(w http.ResponseWriter, r *http.Request) {
-	loginV.ViewLogin.Execute(w, nil)
+	if r.URL.Path != "/login" && r.Method != "GET" {
+		errorHandler(w, r, http.StatusNotFound)
+		return
+	}
+	views.ViewLogin.Execute(w, nil)
 }
 
 func faviconHandler(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/favicon.ico" && r.Method != "GET" {
+		errorHandler(w, r, http.StatusNotFound)
+		return
+	}
 	http.ServeFile(w, r, "static/favicon.ico")
 }
 
 func logoutHandler(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/logout" && r.Method != "GET" {
+		errorHandler(w, r, http.StatusNotFound)
+		return
+	}
 	notoken := http.Cookie{
 		Name:    "token",
 		Value:   "",
@@ -66,4 +81,11 @@ func logoutHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	http.SetCookie(w, &notoken)
 	http.Redirect(w, r, "/login", 302)
+}
+
+func errorHandler(w http.ResponseWriter, r *http.Request, status int) {
+	w.WriteHeader(status)
+	if status == http.StatusNotFound {
+		views.View404.Execute(w, nil)
+	}
 }

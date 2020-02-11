@@ -10,7 +10,10 @@ import (
 )
 
 func TokenHandler(w http.ResponseWriter, r *http.Request) {
-
+	if r.URL.Path != "/auth" && r.Method != "GET" {
+		errorHandler(w, r, http.StatusNotFound)
+		return
+	}
 	w.Header().Add("Content-Type", "application/x-www-form-urlencoded")
 	r.ParseForm()
 	username := r.Form.Get("username")

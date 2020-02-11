@@ -21,7 +21,8 @@
             "program": "main.go",
             "env": {
                 "PORT" : 3000,
-                "APP_KEY" : "secret"
+                "APP_KEY" : "secret",
+                "QUIZZESDIR" : "quizzes/contents"
             },
             "args": []
         }
