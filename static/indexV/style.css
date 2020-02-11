@@ -1,0 +1,39 @@
+.quizzes_container {
+    display: inline-block;
+    width: 70%;
+    height: 100%;
+    border-radius: 3px;
+    padding-top: 20px;
+}
+
+.quizz {
+    display: flex;
+    width: 80%;
+    height: 100%;
+    background-color: rgb(254, 253, 241);
+    border-radius: 5px;
+    border-color: rgb(128,162,206);
+    border-width: 1px solid;
+    box-shadow: 5px 10px #888888;
+    padding: 2px;
+    padding-left: 5px;
+    padding-right: 5px;
+    text-align: left;
+}
+
+.take_quizz {
+    float: right;
+    max-width: 80%;
+    max-height: 80%;
+}
+
+.image_centered {
+    float: right;
+    text-align: center;
+    width: 30%;
+    height: 100%;
+}
+
+img {
+    display: inline-block;
+}

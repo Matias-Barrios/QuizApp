@@ -30,7 +30,8 @@ func GetRouter() *http.ServeMux {
 	mux.HandleFunc("/logout", logoutHandler)
 
 	// Static files handling
-	mux.Handle("/static/", fileServerWithCustom404(http.Dir("static")))
+	//mux.Handle("/static/", fileServerWithCustom404(http.Dir("static")))
+	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 	return mux
 }
 

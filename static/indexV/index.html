@@ -6,6 +6,7 @@
     <title>Linux Quiz</title>
     <meta name="description" content="Linux Quiz">
     <meta name="author" content="Matias Barrios">
+    <link rel="stylesheet" href="static/indexV/style.css">
     <link rel="stylesheet" href="static/style.css">
     <link rel="stylesheet" href="static/bootstrap/css/bootstrap.css">
     <script src="static/bootstrap/js/bootstrap.min.js"></script>
@@ -17,6 +18,29 @@
         <a href="/logout" class="righty" ><div>Logout : <b>{{ .User.Name }}</b></div></a>
         <a href="/contact" class="righty" >Contact</a>
         <a href="/about" class="righty" >About</a>
+    </div>
+    {{ $length := len .Quizzes }} {{ if gt $length 0 }}
+    <div class="quizzes_container" >
+        
+        {{range $val := .Quizzes}}
+            <div class="quizz">
+                <div>
+                    <p><h3><u></s><b>Id :</b> {{ $val.ID}} </u></h1></p>
+                    <p><b>Author :</b> {{ $val.Author}} </p>
+                    <p><b>Description :</b> {{ $val.Description}} </p>
+                    <p><b>Number of questions :</b> {{ len $val.Questions }} </p>
+                </div>
+                <div class="image_centered" >
+                    <img class="take_quizz" src="static/images/play_icon.png" />
+                </div>
+            </div>
+        {{end}} 
+    </div>
+    {{ else }}
+    <div class="quizzes_container" >
+        <p><h3></s><b> Not available courses at the moment!</h1></p>
+    </div>
+    {{ end }}
 </body>
 
 </html>

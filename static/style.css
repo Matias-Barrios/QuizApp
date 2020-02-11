@@ -36,8 +36,8 @@
 .topnav a {
     float: left;
     color: white;
-    text-align: center;v
-    padding: 14px 16px;
+    text-align: center;
+    padding: 16px;
     text-decoration: none;
     font-size: 17px;
 }
@@ -58,4 +58,18 @@
 .topnav a.active {
     background-color: rgb(133, 212, 237);
     color: white;
+}
+
+html {
+    text-align: center;
+}
+
+html>* {
+    text-align: center;
+}
+
+body {
+    display: inline-block;
+    text-align: center !important;
+    width: 80%;
 }
