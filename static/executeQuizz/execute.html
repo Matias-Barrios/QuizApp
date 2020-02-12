@@ -6,10 +6,11 @@
     <title>Linux Quiz</title>
     <meta name="description" content="Linux Quiz">
     <meta name="author" content="Matias Barrios">
-    <link rel="stylesheet" href="static/indexV/style.css">
+    <link rel="stylesheet" href="static/executeQuizz/style.css">
     <link rel="stylesheet" href="static/style.css">
     <link rel="stylesheet" href="static/bootstrap/css/bootstrap.css">
     <script src="static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="static/executeQuizz/main.js"></script>
 </head>
 
 <body>
@@ -19,16 +20,22 @@
         <a href="/contact" class="righty" >Contact</a>
         <a href="/about" class="righty" >About</a>
     </div>
-   <h1> <b>Quizz </b>: {{ .Quiz.ID }} </h1>
-   {{range $q := .Questions}}
+    <div class="title_and_description" >
+        <h5> {{ .Quiz.ID }} </h5>
+        <h6> {{ .Quiz.Description }} </h6>
+    </div>
+   {{range $q := .Quiz.Questions}} 
     <div class="question_container">
-        <p><h3>{{ .q.Question }}</h3></p>
-        {{ $mode := .q.Mode }} {{ if eq $mode "single" }}
-            {{range $o := .q.Options}}
-            <input type="radio" id="{{ .q.ID }}" name="{{ .q.ID }}" value="{{$o}}">
-            <label for="{{ .q.ID }}">{{$o}}</label><br>
+        <p><h4>{{ $q.Question }}</h4></p>
+        {{ $mode := $q.Mode }} {{ if eq $mode "single" }}
+            {{range $o := $q.Options}}
+            <input type="radio" id="{{ $q.ID }}" name="{{ $q.ID }}" value="{{$o}}">
+            <label for="{{ $q.ID }}">{{$o}}</label><br>
             {{end}}
         {{ end}}
+    </div>
+    <div class="validate_quiz">
+        <button type="submit" class="validate_button" onclick="validate({{.Quiz.ID}})">Validate</button>
     </div>
    {{ end }}
 </body>

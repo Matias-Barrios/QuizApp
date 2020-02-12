@@ -100,6 +100,7 @@ func executeQuizzHanlder(w http.ResponseWriter, r *http.Request) {
 		errorHandler(w, r, http.StatusNotFound)
 		return
 	}
+	quizz.ID = keys[0]
 	envelope := models.ExecuteQuizzEnvelope{
 		User: u,
 		Quiz: quizz,
