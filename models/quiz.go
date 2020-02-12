@@ -2,6 +2,7 @@ package models
 
 // Question :
 type Question struct {
+	ID       string   `json:"id"`
 	Mode     string   `json:"mode"`
 	Question string   `json:"question"`
 	Options  []string `json:"options"`

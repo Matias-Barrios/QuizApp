@@ -19,7 +19,18 @@
         <a href="/contact" class="righty" >Contact</a>
         <a href="/about" class="righty" >About</a>
     </div>
-   
+   <h1> <b>Quizz </b>: {{ .Quiz.ID }} </h1>
+   {{range $q := .Questions}}
+    <div class="question_container">
+        <p><h3>{{ .q.Question }}</h3></p>
+        {{ $mode := .q.Mode }} {{ if eq $mode "single" }}
+            {{range $o := .q.Options}}
+            <input type="radio" id="{{ .q.ID }}" name="{{ .q.ID }}" value="{{$o}}">
+            <label for="{{ .q.ID }}">{{$o}}</label><br>
+            {{end}}
+        {{ end}}
+    </div>
+   {{ end }}
 </body>
 
 </html>
