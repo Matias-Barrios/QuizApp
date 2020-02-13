@@ -161,3 +161,14 @@ func getClaims(w http.ResponseWriter, r *http.Request) models.Claim {
 	})
 	return *claims
 }
+
+func registerHandler(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/register" && r.Method != "GET" {
+		errorHandler(w, r, http.StatusNotFound)
+		return
+	}
+	err := views.ViewRegister.Execute(w, nil)
+	if err != nil {
+		log.Println(err.Error())
+	}
+}

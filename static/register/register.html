@@ -3,38 +3,39 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Linux Quiz</title>
+    <title>Register at Linux Quiz App</title>
     <meta name="description" content="Linux Quiz">
     <meta name="author" content="Matias Barrios">
     <link rel="stylesheet" href="static/style.css">
-    <link rel="stylesheet" href="static/loginV/style.css">
+    <link rel="stylesheet" href="static/register/style.css">
     <link rel="stylesheet" href="static/bootstrap/css/bootstrap.css">
     <script src="static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="static/register/main.js"></script>
 </head>
 
 <body>
     <div id="logo_container">
         <img src="static/images/logo_quiz_app.png"></img>
-
-        <form action="/auth" method="post">
             <div class="login_container">
                 <p>
                     <label for="username"><b>Username</b></label>
-                    <input type="text" placeholder="Enter Username" name="username" required>
+                    <input id="username" type="text" placeholder="Enter username" name="username" required>
                 </p>
                 <p>
                     <label for="password"><b>Password</b></label>
-                    <input type="password" placeholder="Enter Password" name="password" required>
+                    <input id="password" type="password" placeholder="Enter password" name="password" required>
                 </p>
                 <p>
-                    <button type="submit" class="q-button">Login</button>
-                    <input type="checkbox" checked="checked" name="remember"> Remember Me! </input>
+                    <label for="password"><b>Repeat password</b></label>
+                    <input id="password_check" type="password" placeholder="Repeat password" name="password_check" required>
                 </p>
                 <p>
-                    <a href="/register"> Register now! </input>
+                    <button class="q-button">Create</button>
                 </p>
+                <div>
+                    <p></p>
+                </div>
             </div>
-        </form>
     </div>
 </body>
 

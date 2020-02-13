@@ -32,6 +32,7 @@ func GetRouter() *http.ServeMux {
 	// Unprotected endpoints
 	mux.HandleFunc("/login", loginHandler)
 	mux.HandleFunc("/auth", TokenHandler)
+	mux.HandleFunc("/register", registerHandler)
 	mux.HandleFunc("/favicon.ico", faviconHandler)
 	mux.HandleFunc("/logout", logoutHandler)
 
