@@ -2,8 +2,9 @@ package models
 
 // Solution :
 type Solution struct {
-	QuizID  string    `json:"quizID"`
-	Answers []Answers `json:"answers"`
+	QuizID              string    `json:"quizID"`
+	Answers             []Answers `json:"answers"`
+	PercentageCompleted int       `json:"percentageCompleted"`
 }
 
 // Answers :

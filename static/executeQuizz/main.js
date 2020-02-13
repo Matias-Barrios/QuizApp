@@ -23,9 +23,30 @@ function validate(ID) {
           },
           body: JSON.stringify(answer)
         });
-        const content = await rawResponse.json();
+        const solved = await rawResponse.json();
       
-        console.log(content);
+        solved.answers.forEach(element => {
+          if (element.passed)
+            Array.from(document.getElementsByClassName('question_container'))
+          .filter(ans => ans.questionID == element.name)[0].style.background="#4bc96c";
+          else
+            Array.from(document.getElementsByClassName('question_container'))
+          .filter(ans => ans.questionID == element.name)[0].style.background="#e86d6d";
+        });
+
+        document.getElementById('validate_quiz').style.display = "none";
+        let percentageBanner = document.getElementById('percentage_completed');
+        console.log(percentageBanner)
+        if (percentageBanner != null) { 
+          percentageBanner.style.display = "inline-block";
+          if (solved.percentageCompleted >= 100)
+            percentageBanner.style.background = "#4bc96c"; 
+          else 
+            percentageBanner.style.background = "#d9d779"; 
+          percentageBanner
+            .querySelector("#percentage_completed_text")
+            .textContent = `Your score for this test : ${solved.percentageCompleted}`;
+        }
       })();
 }
 

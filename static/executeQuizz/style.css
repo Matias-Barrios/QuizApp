@@ -1,7 +1,7 @@
 .question_container {
     text-align: left;
     display: inline-block;
-    width: 70%;
+    width: 90%;
     height: 100%;
     border-radius: 3px;
     padding: 20px;
@@ -49,4 +49,21 @@
 .validate_button:active {
     position: relative;
     top: 1px;
+}
+
+.percentage_completed {
+    box-shadow: inset 0px 1px 0px 0px #54a3f7;
+    background: linear-gradient(to bottom, #ecf0f0 5%, #e7e8e7 100%);
+    background-color: #ecf0f0;
+    border-radius: 3px;
+    border: 1px solid #7e7e7e;
+    display: inline-block;
+    color: #282727;
+    font-family: Arial;
+    font-size: 17px;
+    padding: 20px;
+    margin-top: 10px;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #444444;
+    width: 90%;
 }

@@ -25,7 +25,7 @@
         <h6> {{ .Quiz.Description }} </h6>
     </div>
    {{range $q := .Quiz.Questions}} 
-    <div class="question_container">
+    <div class="question_container" name="{{ $q.ID }}" >
         <p><h4>{{ $q.Question }}</h4></p>
         {{ $mode := $q.Mode }} {{ if eq $mode "single" }}
             {{range $o := $q.Options}}
@@ -35,8 +35,11 @@
         {{ end}}
     </div>
    {{ end }}
-    <div class="validate_quiz">
+    <div id="validate_quiz" class="validate_quiz">
         <button type="submit" class="validate_button" onclick="validate('{{.Quiz.ID}}')">Validate</button>
+    </div>
+    <div id="percentage_completed" class="percentage_completed">
+        <p id="percentage_completed_text"></p>
     </div>
 </body>
 

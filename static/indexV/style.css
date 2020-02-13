@@ -1,6 +1,6 @@
 .quizzes_container {
     display: inline-block;
-    width: 70%;
+    width: 98%;
     height: 100%;
     border-radius: 3px;
     padding-top: 20px;
@@ -8,7 +8,7 @@
 
 .quizz {
     display: flex;
-    width: 80%;
+    width: 98%;
     height: 100%;
     background-color: rgb(254, 253, 241);
     border-radius: 5px;
@@ -23,7 +23,7 @@
 
 .take_quizz {
     float: right;
-    max-width: 80%;
+    max-width: 98%;
     max-height: 80%;
 }
 

@@ -16,6 +16,25 @@ func validate(quiz models.Quiz, solution *models.Solution) {
 			}
 		}
 	}
+	solution.PercentageCompleted = averageCompleted(*solution)
+}
+
+func averageCompleted(solution models.Solution) int {
+	var count = countCompleted(solution)
+	if count == 0 {
+		return 0
+	}
+	return count * 100 / len(solution.Answers)
+}
+
+func countCompleted(solution models.Solution) int {
+	var counter int
+	for _, s := range solution.Answers {
+		if s.Passed {
+			counter++
+		}
+	}
+	return counter
 }
 
 func compareStringSlices(s1, s2 []string) bool {
