@@ -34,10 +34,10 @@
             {{end}}
         {{ end}}
     </div>
-    <div class="validate_quiz">
-        <button type="submit" class="validate_button" onclick="validate({{.Quiz.ID}})">Validate</button>
-    </div>
    {{ end }}
+    <div class="validate_quiz">
+        <button type="submit" class="validate_button" onclick="validate('{{.Quiz.ID}}')">Validate</button>
+    </div>
 </body>
 
 </html>

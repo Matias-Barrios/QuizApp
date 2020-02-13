@@ -14,7 +14,19 @@ function validate(ID) {
             values : checked
         });
     }
-    console.log(answer);
+    (async () => {
+        const rawResponse = await fetch('/validate', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(answer)
+        });
+        const content = await rawResponse.json();
+      
+        console.log(content);
+      })();
 }
 
 document.addEventListener("DOMContentLoaded", function(event) { 
