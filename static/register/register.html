@@ -18,26 +18,30 @@
         <img src="static/images/logo_quiz_app.png"></img>
             <div class="login_container">
                 <p>
-                    <label for="username"><b>Username</b></label>
-                    <input id="username" type="text" placeholder="Enter username" name="username" required>
+                    <label for="Name"><b>Username</b></label>
+                    <input autocomplete="off" id="Name" type="text" placeholder="Enter username" name="Name" required>
                 </p>
                 <p>
-                    <label for="email"><b>Email</b></label>
-                    <input id="email" type="text" placeholder="Enter email" name="email" required>
+                    <label for="Email"><b>Email</b></label>
+                    <input autocomplete="off" id="Email" type="text" placeholder="Enter email" name="Email" required>
                 </p>
                 <p>
-                    <label for="password"><b>Password</b></label>
-                    <input id="password" type="password" placeholder="Enter password" name="password" required>
+                    <label for="Pass"><b>Password</b></label>
+                    <input autocomplete="off" id="Pass" type="password" placeholder="Enter password" name="Pass" required>
                 </p>
                 <p>
-                    <label for="password"><b>Repeat password</b></label>
-                    <input id="password_check" type="password" placeholder="Repeat password" name="password_check" required>
+                    <label for="PassRepeat"><b>Repeat password</b></label>
+                    <input autocomplete="off" id="PassRepeat" type="password" placeholder="Repeat password" name="PassRepeat" required>
                 </p>
-                <p>
-                    <button class="q-button">Create</button>
-                </p>
+               
                 <div>
-                    <p></p>
+                    < <p class="password_rules" id="password_validation_length" > * Password must have at least 8 characters </p>
+                    <p class="password_rules" id="password_validation_oneupper" > * Password must have at least 1 uppercase character </p>
+                    <p class="password_rules" id="password_validation_onelower" > * Password must have at least 1 lowercase character </p>
+                    <p class="password_rules" id="password_validation_special" > * Password must have at least 1 special character </p>
+                    <p>
+                        <button class="q-button">Create</button>
+                    </p>
                 </div>
             </div>
     </div>

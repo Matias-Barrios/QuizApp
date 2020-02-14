@@ -31,4 +31,20 @@ body {
 .login_container {
     width: 100%;
     height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.login_container > p {
+    width: 50%;
+}
+.login_container > label {
+    width: 50%;
+}
+
+
+.password_rules {
+    font-family: "verdana";
+    color: midnightblue;
 }
