@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"regexp"
 	"strconv"
 	"time"
 
@@ -147,6 +148,9 @@ func errorHandler(w http.ResponseWriter, r *http.Request, status int) {
 	if status == http.StatusNotFound {
 		views.View404.Execute(w, nil)
 	}
+	if status == http.StatusInternalServerError {
+		views.ViewInternalServerError.Execute(w, nil)
+	}
 }
 
 func getClaims(w http.ResponseWriter, r *http.Request) models.Claim {
@@ -171,4 +175,26 @@ func registerHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println(err.Error())
 	}
+}
+
+func createUserHandler(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/create" && r.Method != "POST" {
+		errorHandler(w, r, http.StatusNotFound)
+		return
+	}
+
+	decoder := json.NewDecoder(r.Body)
+	registerBody := models.RegisterBody{}
+	err := decoder.Decode(&registerBody)
+	if err != nil {
+		http.Redirect(w, r, "/error", 302)
+		return
+	}
+	validusername := regexp.MustCompile("^[a-zA-Z][a-zA-Z0-9_-]{5,}$")
+	validemail := regexp.MustCompile("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")
+	eightormore, lower, upper, symbol := verifyPassword(registerBody.Password)
+	if !eightormore || !lower || !upper || !symbol || !validusername.Match([]byte(registerBody.Username)) || !validemail.Match([]byte(registerBody.Email)) {
+		http.Redirect(w, r, "/error", 302)
+	}
+	http.Redirect(w, r, "/error", 302)
 }

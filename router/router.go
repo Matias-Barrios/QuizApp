@@ -35,6 +35,8 @@ func GetRouter() *http.ServeMux {
 	mux.HandleFunc("/register", registerHandler)
 	mux.HandleFunc("/favicon.ico", faviconHandler)
 	mux.HandleFunc("/logout", logoutHandler)
+	mux.HandleFunc("/create", createUserHandler)
+	mux.HandleFunc("/error", internalServerErrorHandler)
 
 	// Static files handling
 	//mux.Handle("/static/", fileServerWithCustom404(http.Dir("static")))

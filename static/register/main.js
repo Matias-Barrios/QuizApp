@@ -1,30 +1,33 @@
-function ValidateUsername(textBox) {
-    let register_button = document.getElementById('register');
+let OKCOLOR = "#b5ffb8";
+let BADCOLOR =  "#d1736d";
+let TEXTOKCOLOR = "#49c94e";
+let BUTTONOKCOLOR = "#49c94e";
 
-    if (__validateUserName(textBox.value)){
-        textBox.style.background = "#53bd66";
-        register_button.disabled = false
-    }
-    else{
-        textBox.style.background = "#d1736d";
-        register_button.disabled = true;
-    }
+
+function __changeButtonColors(color){
+    document.getElementById('register').style.background = color;
 }
 
-function ValidateEmail(textBox) {
+function ValidateFields() {
     let register_button = document.getElementById('register');
-    if (__validateEmail(textBox.value)){
-        textBox.style.background = "#53bd66";
-        delete register_button.disabled;
+    let textBox = document.getElementById('Pass');
+    let repeatTextBox = document.getElementById('PassRepeat');
+    let usernametextBox = document.getElementById('Name');
+    let emailtextBox = document.getElementById('Email');
+
+    if (__validateUserName(usernametextBox.value)){
+        usernametextBox.style.background = OKCOLOR;
     }
     else{
-        textBox.style.background = "#d1736d";
-        register_button.disabled = true;
+        usernametextBox.style.background = BADCOLOR;
     }
-}
 
-function ValidatePassword(textBox) {
-    let register_button = document.getElementById('register');
+    if (__validateEmail(emailtextBox.value)){
+        emailtextBox.style.background = OKCOLOR;
+    }
+    else{
+        emailtextBox.style.background = BADCOLOR;
+    }
     let passwordRules ={
         password_validation_length :  document.getElementById('password_validation_length'),
         password_validation_oneupper :  document.getElementById('password_validation_oneupper'),
@@ -32,39 +35,31 @@ function ValidatePassword(textBox) {
         password_validation_special :  document.getElementById('password_validation_special')
     }
     if (__testPasswordisAtLeast8Characters(textBox.value)){
-        passwordRules["password_validation_length"].style.color = "#53bd66";
-        delete register_button.disabled;
+        passwordRules["password_validation_length"].style.color = TEXTOKCOLOR;
     }
     else{
-        passwordRules["password_validation_length"].style.color = "#d1736d";
-        register_button.disabled = true;
+        passwordRules["password_validation_length"].style.color = BADCOLOR;
     }
     
     if (__testPasswordisHasAtLeastOneLowerCaseCharacter(textBox.value)){ 
-        passwordRules["password_validation_onelower"].style.color = "#53bd66";
-        delete register_button.disabled;
+        passwordRules["password_validation_onelower"].style.color = TEXTOKCOLOR;
     }
     else { 
-        passwordRules["password_validation_onelower"].style.color = "#d1736d";
-        register_button.disabled = true;
+        passwordRules["password_validation_onelower"].style.color = BADCOLOR;
     }
     
     if (__testPasswordisHasAtLeastOneUpperCaseCharacter(textBox.value)){ 
-        passwordRules["password_validation_oneupper"].style.color = "#53bd66";
-        delete register_button.disabled;
+        passwordRules["password_validation_oneupper"].style.color = TEXTOKCOLOR;
     }
     else{ 
-        passwordRules["password_validation_oneupper"].style.color = "#d1736d";
-        register_button.disabled = true;
+        passwordRules["password_validation_oneupper"].style.color = BADCOLOR;
     }
 
     if (__testPasswordisHasAtLeastOneSpecialCharacter(textBox.value)){ 
-        passwordRules["password_validation_special"].style.color = "#53bd66";
-        delete register_button.disabled;
+        passwordRules["password_validation_special"].style.color = TEXTOKCOLOR;
     }
     else {
-        passwordRules["password_validation_special"].style.color = "#d1736d";
-        register_button.disabled = true;
+        passwordRules["password_validation_special"].style.color = BADCOLOR;
     }
     
     let passwordInput = document.getElementById('Pass');
@@ -72,26 +67,63 @@ function ValidatePassword(textBox) {
         __testPasswordisHasAtLeastOneLowerCaseCharacter(textBox.value) &&
         __testPasswordisHasAtLeastOneUpperCaseCharacter(textBox.value) &&
         __testPasswordisHasAtLeastOneSpecialCharacter(textBox.value)){ 
-        passwordInput.style.background = "#53bd66";
-        delete register_button.disabled;    
+        passwordInput.style.background = OKCOLOR;
     }
     else{
-        register_button.disabled = true
-        passwordInput.style.background = "#d1736d";
+        passwordInput.style.background = BADCOLOR;
+    }
+    if ( __validateRepeat(repeatTextBox.value)){
+        repeatTextBox.style.background = OKCOLOR;
+    }else{
+        repeatTextBox.style.background = BADCOLOR;
+    }
+
+    if (__testPasswordisAtLeast8Characters(textBox.value) &&
+        __testPasswordisHasAtLeastOneLowerCaseCharacter(textBox.value) &&
+        __testPasswordisHasAtLeastOneUpperCaseCharacter(textBox.value) &&
+        __testPasswordisHasAtLeastOneSpecialCharacter(textBox.value) &&
+        __validateEmail(emailtextBox.value) &&
+        __validateUserName(usernametextBox.value) &&
+        __validateRepeat(repeatTextBox.value)){
+            register_button.disabled = false
+            __changeButtonColors(BUTTONOKCOLOR);
+        }
+    else{
+            register_button.disabled = true
+            __changeButtonColors(BADCOLOR);
     }
 }
 
-function ValidateRepeat(textBox){
-    let register_button = document.getElementById('register');
-    if (textBox == null) {
-        register_button.disabled = true;
+
+function Submit(){
+    let password = document.getElementById('Pass').value;
+    let usernametext = document.getElementById('Name').value;
+    let emailtext = document.getElementById('Email').value;
+    if (password == null || usernametext == null || emailtext == null)
         return;
-    }
-    if ( __validateRepeat(textBox.value) ){
-        delete register_button.disabled;
-    }else{
-        register_button.disabled = true;
-    }
+    fetch('/create', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            username : usernametext,
+            email : emailtext,
+            password : password
+        })
+    })
+    .then(function(response) {
+        if (response.redirected) {
+            window.location.replace(redirected.url);
+        }
+        return response.json();
+    })
+    .then(function(data) {
+    })
+    .catch(function(err) {
+        window.location.replace("/error");
+    });
+        
 }
 
 function __validateRepeat(input){
