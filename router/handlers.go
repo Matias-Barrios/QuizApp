@@ -39,7 +39,7 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 	} else {
 		offset = int(offsetv)
 	}
-	qs, count, err := database.GetQuizzes(offset)
+	qs, count, err := database.GetQuizzes(claims.User.ID, offset)
 	if err != nil {
 		http.Redirect(w, r, "/login", 302)
 		return

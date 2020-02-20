@@ -12,10 +12,10 @@ import (
 func GetUser(password, email string) (models.User, error) {
 	var user models.User
 	err := sqlConnection.QueryRow(`
-		SELECT name, email, password_encrypted
+		SELECT id,name, email, password_encrypted
 		FROM Users
 		WHERE active = true; 
-	`).Scan(&user.Name, &user.Email, &user.Password)
+	`).Scan(&user.ID, &user.Name, &user.Email, &user.Password)
 	if err != nil {
 		return models.User{}, err
 	}

@@ -7,17 +7,19 @@ import (
 	"github.com/Matias-Barrios/QuizApp/models"
 )
 
-func GetQuizzes(offset int) ([]models.Quiz, int, error) {
+func GetQuizzes(userid, offset int) ([]models.Quiz, int, error) {
 	var quizzes []models.Quiz
 	quizzes = make([]models.Quiz, 0)
 	rows, err := sqlConnection.Query(`
-		SELECT id, content, (
+		SELECT id,if(Users_Completed_Quizzes.user_id is not null, true, false) as completed, content, (
 			SELECT count(*) FROM Quizzes
 		) as count
 		FROM Quizzes
-		WHERE active = true
+		LEFT OUTER JOIN Users_Completed_Quizzes ON 
+		Users_Completed_Quizzes.user_id = ? AND  Users_Completed_Quizzes.user_id = id
+		AND Quizzes.active = true
 		LIMIT 10 OFFSET ?
-		`, offset)
+		`, userid, offset)
 	if err != nil {
 		return nil, 0, err
 	}
@@ -25,7 +27,8 @@ func GetQuizzes(offset int) ([]models.Quiz, int, error) {
 	for rows.Next() {
 		var id int
 		var content string
-		err := rows.Scan(&id, &content, &count)
+		var completed bool
+		err := rows.Scan(&id, &completed, &content, &count)
 		if err != nil {
 			return nil, 0, err
 		}
@@ -35,6 +38,7 @@ func GetQuizzes(offset int) ([]models.Quiz, int, error) {
 			return nil, 0, err
 		}
 		q.ID = strconv.Itoa(id)
+		q.Completed = completed
 		quizzes = append(quizzes, q)
 	}
 	return quizzes, count, nil
