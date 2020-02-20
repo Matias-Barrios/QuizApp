@@ -4,6 +4,7 @@
     height: 100%;
     border-radius: 3px;
     padding-top: 20px;
+    padding: 20px;
 }
 
 .quizz {
@@ -12,13 +13,13 @@
     height: 100%;
     background-color: rgb(254, 253, 241);
     border-radius: 5px;
-    border-color: rgb(128,162,206);
-    border-width: 1px solid;
+    border: 5px solid rgb(128,162,206);
     box-shadow: 5px 10px #888888;
-    padding: 2px;
+    padding: 20px;
     padding-left: 5px;
     padding-right: 5px;
     text-align: left;
+    margin: 14px;
 }
 
 .take_quizz {
@@ -42,3 +43,14 @@ img {
     display: inline-block;
 }
 
+
+#quiz_ID_title {
+    color: slategrey;
+}
+#quiz_ID {
+    color: steelblue;
+}
+
+.quiz_data {
+    color: lightslategray;
+}

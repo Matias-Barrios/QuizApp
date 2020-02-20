@@ -15,7 +15,9 @@ CREATE TABLE Users (
 
 CREATE TABLE Quizzes (
      id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-     content TEXT NOT NULL
+     content TEXT NOT NULL,
+     active BOOL NOT NULL,
+     CHECK (JSON_VALID(content))
 );
 
 CREATE TABLE Users_Completed_Quizzes (
@@ -33,20 +35,7 @@ FOR EACH ROW
 BEGIN 
 IF (NEW.name REGEXP '^[a-zA-Z0-9_-]{5,20}$' ) = 0 THEN 
   SIGNAL SQLSTATE '12345'
-     SET MESSAGE_TEXT = 'Wroooong!!!';
-END IF; 
-END$$
-DELIMITER ;
-
-
-DELIMITER $$
-CREATE TRIGGER check_quiz_content BEFORE INSERT ON Quizzes
-FOR EACH ROW 
-BEGIN 
-IF (NEW.content REGEXP '^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{4})$
-' ) = 0 THEN 
-  SIGNAL SQLSTATE '12345'
-     SET MESSAGE_TEXT = 'Wroooong!!!';
+     SET MESSAGE_TEXT = 'Wrong username format!';
 END IF; 
 END$$
 DELIMITER ;

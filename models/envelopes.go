@@ -4,6 +4,8 @@ package models
 type HomeEnvelope struct {
 	User    User
 	Quizzes []Quiz
+	Offset  int
+	Total   int
 }
 
 // ExecuteQuizzEnvelope :

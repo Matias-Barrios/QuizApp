@@ -10,7 +10,6 @@ import (
 
 	"github.com/Matias-Barrios/QuizApp/database"
 	"github.com/Matias-Barrios/QuizApp/models"
-	quizzes "github.com/Matias-Barrios/QuizApp/quizzes"
 	"github.com/Matias-Barrios/QuizApp/views"
 	"github.com/dgrijalva/jwt-go"
 )
@@ -40,7 +39,7 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 	} else {
 		offset = int(offsetv)
 	}
-	qs, err := quizzes.GetQuizzes(offset)
+	qs, count, err := database.GetQuizzes(offset)
 	if err != nil {
 		http.Redirect(w, r, "/login", 302)
 		return
@@ -50,6 +49,8 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	envelope := models.HomeEnvelope{
 		User:    u,
+		Offset:  offset,
+		Total:   count,
 		Quizzes: qs,
 	}
 	err = views.ViewIndex.Execute(w, &envelope)
@@ -105,7 +106,7 @@ func executeQuizzHanlder(w http.ResponseWriter, r *http.Request) {
 		errorHandler(w, r, http.StatusNotFound)
 		return
 	}
-	quizz, err := quizzes.GetQuizzByID(keys[0])
+	quizz, err := database.GetQuizzByID(keys[0])
 	if err != nil {
 		errorHandler(w, r, http.StatusNotFound)
 		return
@@ -134,7 +135,7 @@ func validateQuizzHanlder(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		errorHandler(w, r, http.StatusNotFound)
 	}
-	quizz, err := quizzes.GetQuizzByID(solution.QuizID)
+	quizz, err := database.GetQuizzByID(solution.QuizID)
 	if err != nil {
 		errorHandler(w, r, http.StatusNotFound)
 		return
