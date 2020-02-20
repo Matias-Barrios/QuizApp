@@ -124,27 +124,6 @@ func executeQuizzHanlder(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func validateQuizzHanlder(w http.ResponseWriter, r *http.Request) {
-	if r.URL.Path != "/validate" && r.Method != "POST" {
-		errorHandler(w, r, http.StatusNotFound)
-		return
-	}
-	decoder := json.NewDecoder(r.Body)
-	var solution models.Solution
-	err := decoder.Decode(&solution)
-	if err != nil {
-		errorHandler(w, r, http.StatusNotFound)
-	}
-	quizz, err := database.GetQuizzByID(solution.QuizID)
-	if err != nil {
-		errorHandler(w, r, http.StatusNotFound)
-		return
-	}
-	validate(quizz, &solution)
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(solution)
-}
-
 func errorHandler(w http.ResponseWriter, r *http.Request, status int) {
 	w.WriteHeader(status)
 	if status == http.StatusNotFound {

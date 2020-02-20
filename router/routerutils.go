@@ -3,10 +3,11 @@ package router
 import (
 	"unicode"
 
+	"github.com/Matias-Barrios/QuizApp/database"
 	"github.com/Matias-Barrios/QuizApp/models"
 )
 
-func validate(quiz models.Quiz, solution *models.Solution) {
+func validate(user_id int, quiz models.Quiz, solution *models.Solution) error {
 	for ix := range quiz.Questions {
 		for subix := range solution.Answers {
 			if quiz.Questions[ix].ID == solution.Answers[subix].QuestionID {
@@ -19,6 +20,13 @@ func validate(quiz models.Quiz, solution *models.Solution) {
 		}
 	}
 	solution.PercentageCompleted = averageCompleted(*solution)
+	if solution.PercentageCompleted > 80 {
+		err := database.SetQuizzAsCompleted(user_id, quiz.ID)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 func averageCompleted(solution models.Solution) int {

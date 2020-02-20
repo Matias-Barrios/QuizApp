@@ -11,14 +11,14 @@ func GetQuizzes(userid, offset int) ([]models.Quiz, int, error) {
 	var quizzes []models.Quiz
 	quizzes = make([]models.Quiz, 0)
 	rows, err := sqlConnection.Query(`
-		SELECT id,if(Users_Completed_Quizzes.user_id is not null, true, false) as completed, content, (
-			SELECT count(*) FROM Quizzes
-		) as count
-		FROM Quizzes
-		LEFT OUTER JOIN Users_Completed_Quizzes ON 
-		Users_Completed_Quizzes.user_id = ? AND  Users_Completed_Quizzes.user_id = id
-		AND Quizzes.active = true
-		LIMIT 10 OFFSET ?
+		SELECT Quizzes.id,
+			   if(Users_Completed_Quizzes.user_id IS NOT NULL, true, false) as completed,
+			   Quizzes.Content,
+			   ( SELECT count(*) FROM Quizzes) as count 
+			   FROM Quizzes LEFT JOIN Users_Completed_Quizzes 
+			   ON Users_Completed_Quizzes.user_id = ?
+			   AND Quizzes.id = Users_Completed_Quizzes.quiz_id
+			   LIMIT 10 OFFSET ?
 		`, userid, offset)
 	if err != nil {
 		return nil, 0, err
@@ -61,4 +61,17 @@ func GetQuizzByID(id string) (models.Quiz, error) {
 	}
 	quizz.ID = id
 	return quizz, err
+}
+
+//  SetQuizzAsCompleted :
+func SetQuizzAsCompleted(user_id int, id string) error {
+	_, err := sqlConnection.Exec(`
+		INSERT INTO Users_Completed_Quizzes
+		(user_id,quiz_id)
+		VALUES (?, ?)
+		`, user_id, id)
+	if err != nil {
+		return err
+	}
+	return nil
 }
