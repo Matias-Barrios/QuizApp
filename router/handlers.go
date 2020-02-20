@@ -46,7 +46,7 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	u := models.User{
-		Name: claims.Username,
+		Name: claims.User.Name,
 	}
 	envelope := models.HomeEnvelope{
 		User:    u,
@@ -98,7 +98,7 @@ func executeQuizzHanlder(w http.ResponseWriter, r *http.Request) {
 	}
 	claims := getClaims(w, r)
 	u := models.User{
-		Name: claims.Username,
+		Name: claims.User.Name,
 	}
 	keys, ok := r.URL.Query()["quizz"]
 	if !ok || len(keys) < 1 || len(keys[0]) < 1 {

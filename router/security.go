@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/Matias-Barrios/QuizApp/database"
 	"github.com/Matias-Barrios/QuizApp/models"
 	"github.com/dgrijalva/jwt-go"
 )
@@ -22,12 +23,14 @@ func TokenHandler(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	username := r.Form.Get("username")
 	password := r.Form.Get("password")
-	if username != "myusername" || password != "mypassword" {
+
+	user, err := database.GetUser(password, username)
+	if err != nil {
 		http.Redirect(w, r, "/login", 302)
 		return
 	}
 	claims := &models.Claim{
-		Username: username,
+		User: user,
 		StandardClaims: jwt.StandardClaims{
 			// In JWT, the expiry time is expressed as unix milliseconds
 			ExpiresAt: time.Now().Add(800 * time.Minute).Unix(),

@@ -4,11 +4,13 @@ import "github.com/dgrijalva/jwt-go"
 
 // User : Model struct for user data
 type User struct {
-	Name string
+	Name     string
+	Email    string
+	Password string
 }
 
 // Claim  :
 type Claim struct {
-	Username string
+	User User
 	jwt.StandardClaims
 }

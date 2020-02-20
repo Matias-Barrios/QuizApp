@@ -112,8 +112,12 @@ function Submit(){
             password : password
         })
     })
-    .then(function(_) {
+    .then(function(response) {
+        if (response.status != 200) {
+            window.location.replace("/error");
+        }else {
         window.location.replace("/success");
+        }
     })
     .then(function(_) {
     })
