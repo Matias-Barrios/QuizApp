@@ -6,16 +6,17 @@ import (
 	"log"
 
 	"github.com/Matias-Barrios/QuizApp/config"
+	_ "github.com/go-sql-driver/mysql"
 )
 
-var sqlConnection *sql.db
+var sqlConnection *sql.DB
 
 func init() {
 	sqlConnection = CreateConnection()
 }
 
 // CreateConnection :
-func CreateConnection() *sql.db {
+func CreateConnection() *sql.DB {
 	envF := config.EnvironmentFetcher{}
 	dbuser, err := envF.GetValue("DBUSER")
 	if err != nil {

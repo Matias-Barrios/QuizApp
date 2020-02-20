@@ -5,7 +5,8 @@ use QUIZAPP;
 
 CREATE TABLE Users (
      id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-     name VARCHAR(20) NOT NULL,
+     name VARCHAR(50) NOT NULL,
+     email VARCHAR(50) NOT NULL,
      password_encrypted VARCHAR(150) NOT NULL,
      created_on BIGINT UNSIGNED NOT NULL,
      active BOOL NOT NULL

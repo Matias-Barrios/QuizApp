@@ -113,14 +113,18 @@ function Submit(){
         })
     })
     .then(function(response) {
+        console.log("Checking response...")
         if (response.redirected) {
-            window.location.replace(redirected.url);
+            console.log("Redirecting to url " + response.url)
+            window.location.replace(response.url);
         }
         return response.json();
     })
     .then(function(data) {
+        console.log("Then...")
     })
     .catch(function(err) {
+        console.log("Redirecting to error "+ err)
         window.location.replace("/error");
     });
         

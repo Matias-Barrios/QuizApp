@@ -8,6 +8,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/Matias-Barrios/QuizApp/database"
 	"github.com/Matias-Barrios/QuizApp/models"
 	quizzes "github.com/Matias-Barrios/QuizApp/quizzes"
 	"github.com/Matias-Barrios/QuizApp/views"
@@ -195,6 +196,14 @@ func createUserHandler(w http.ResponseWriter, r *http.Request) {
 	eightormore, lower, upper, symbol := verifyPassword(registerBody.Password)
 	if !eightormore || !lower || !upper || !symbol || !validusername.Match([]byte(registerBody.Username)) || !validemail.Match([]byte(registerBody.Email)) {
 		http.Redirect(w, r, "/error", 302)
+		return
 	}
-	http.Redirect(w, r, "/error", 302)
+	err = database.CreateUser(registerBody.Username, registerBody.Password, registerBody.Email)
+	if err != nil {
+		http.Redirect(w, r, "/error", 302)
+		return
+	} else {
+		http.Redirect(w, r, "/login", 302)
+		return
+	}
 }

@@ -72,6 +72,8 @@ func verifyPassword(s string) (eightOrMore, lower, upper, special bool) {
 			letters++
 		case unicode.IsLetter(c) || c == ' ':
 			letters++
+		case unicode.IsNumber(c):
+			letters++
 		default:
 			return false, false, false, false
 		}
