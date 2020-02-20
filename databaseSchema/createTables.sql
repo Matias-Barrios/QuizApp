@@ -9,7 +9,8 @@ CREATE TABLE Users (
      email VARCHAR(50) NOT NULL,
      password_encrypted VARCHAR(150) NOT NULL,
      created_on BIGINT UNSIGNED NOT NULL,
-     active BOOL NOT NULL
+     active BOOL NOT NULL,
+     CONSTRAINT unique_email UNIQUE (email)
 );
 
 CREATE TABLE Quizzes (

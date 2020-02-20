@@ -112,16 +112,10 @@ function Submit(){
             password : password
         })
     })
-    .then(function(response) {
-        console.log("Checking response...")
-        if (response.redirected) {
-            console.log("Redirecting to url " + response.url)
-            window.location.replace(response.url);
-        }
-        return response.json();
+    .then(function(_) {
+        window.location.replace("/success");
     })
-    .then(function(data) {
-        console.log("Then...")
+    .then(function(_) {
     })
     .catch(function(err) {
         console.log("Redirecting to error "+ err)

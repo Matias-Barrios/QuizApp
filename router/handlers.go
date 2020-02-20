@@ -200,10 +200,22 @@ func createUserHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	err = database.CreateUser(registerBody.Username, registerBody.Password, registerBody.Email)
 	if err != nil {
-		http.Redirect(w, r, "/error", 302)
+		w.WriteHeader(http.StatusBadRequest)
 		return
 	} else {
-		http.Redirect(w, r, "/login", 302)
+		w.Header().Add("Content-Type", "application/json")
+		w.Write([]byte(`{ "status" : "success" }`))
 		return
+	}
+}
+
+func successCreationHanlder(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/success" && r.Method != "GET" {
+		errorHandler(w, r, http.StatusNotFound)
+		return
+	}
+	err := views.ViewSuccessCreation.Execute(w, nil)
+	if err != nil {
+		log.Println(err.Error())
 	}
 }

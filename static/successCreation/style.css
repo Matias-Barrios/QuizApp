@@ -1,0 +1,14 @@
+#successcreation_container {
+    width: 90%;
+    height: 100%
+}
+
+#account_created_text {
+    color: olivedrab;
+}
+
+#logo {
+    width : 20%;
+    max-width: 300px;
+    display: inline-block;
+}
