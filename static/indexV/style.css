@@ -24,8 +24,7 @@
 
 .take_quizz {
     float: right;
-    max-width: 98%;
-    max-height: 80%;
+    max-width: 100px;
 }
 
 .quizz_info {
@@ -53,4 +52,10 @@ img {
 
 .quiz_data {
     color: rgb(84, 90, 96);
+}
+
+.completed_image {
+    float: right;
+    max-width: 100px;
+    padding: 15px;
 }
