@@ -20,6 +20,17 @@
         <a href="/about" class="righty" >About</a>
     </div>
     {{ $length := len .Quizzes }} {{ if gt $length 0 }}
+    {{ if gt $.Total 10 }}
+    <div class="pagination_container" >
+        <a class="pagination_item" href="/index?offset=0"> start</a>
+        {{ $items :=  mod $.Total 10}}
+        {{ $end := (increment $items -2 )}}
+        {{ range $y := intRange 0 $end}}
+            <a class="pagination_item" href="/index?offset={{multiply . 10}}"> {{ increment . 1}}</a>
+        {{end}}
+        <a class="pagination_item" href="/index?offset={{multiply $end 10}}"> end</a>
+    </div>
+    {{ end }}
     <div class="quizzes_container" >
         
         {{range $val := .Quizzes}}
@@ -43,6 +54,17 @@
             </div>
         {{end}} 
     </div>
+        {{ if gt $.Total 10 }}
+        <div class="pagination_container" >
+            <a class="pagination_item" href="/index?offset=0"> start</a>
+            {{ $items :=  mod $.Total 10}}
+            {{ $end := (increment $items -2 )}}
+            {{ range $y := intRange 0 $end}}
+                <a class="pagination_item" href="/index?offset={{multiply . 10}}"> {{ increment . 1}}</a>
+            {{end}}
+            <a class="pagination_item" href="/index?offset={{multiply $end 10}}"> end</a>
+        </div>
+        {{ end }}
     {{ else }}
     <div class="quizzes_container" >
         <p><h3></s><b> Not available courses at the moment!</h1></p>

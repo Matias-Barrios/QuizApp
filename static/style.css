@@ -73,3 +73,17 @@ body {
     text-align: center !important;
     width: 98%;
 }
+
+.pagination_container {
+    display: inline-flex;
+    text-align: center !important;
+}
+
+.pagination_item {
+    display: inline-block;
+    border-radius: 50%;
+    border: 2px #588ac1 solid;
+    background-color: moccasin;
+    padding: 10px;
+    margin: 10px;
+}
