@@ -29,6 +29,14 @@ CREATE TABLE Users_Completed_Quizzes (
 );
 
 
+CREATE TABLE Unsuccessful_login_attempts (
+  user_id INT UNSIGNED  NOT NULL,
+  attempted_on BIGINT UNSIGNED NOT NULL,
+  PRIMARY KEY (user_id,attempted_on),
+  FOREIGN KEY (user_id) REFERENCES Users (id)
+);
+
+
 DELIMITER $$
 CREATE TRIGGER check_username_validity BEFORE INSERT ON Users
 FOR EACH ROW 
