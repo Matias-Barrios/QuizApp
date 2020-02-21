@@ -8,6 +8,7 @@ import (
 
 	"github.com/Matias-Barrios/QuizApp/database"
 	"github.com/Matias-Barrios/QuizApp/models"
+	"github.com/Matias-Barrios/QuizApp/views"
 	"github.com/dgrijalva/jwt-go"
 )
 
@@ -74,4 +75,15 @@ func AuthMiddleware(next http.Handler) http.Handler {
 			next.ServeHTTP(w, r)
 		}
 	})
+}
+
+func forgotHandler(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/forgot" && r.Method != "GET" {
+		errorHandler(w, r, http.StatusNotFound)
+		return
+	}
+	err := views.ViewForgot.Execute(w, nil)
+	if err != nil {
+		log.Println(err.Error())
+	}
 }

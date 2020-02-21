@@ -3,120 +3,47 @@ let BADCOLOR =  "#d1736d";
 let TEXTOKCOLOR = "#49c94e";
 let BUTTONOKCOLOR = "#49c94e";
 
-
-function __changeButtonColors(color){
-    document.getElementById('register').style.background = color;
-}
-
 function ValidateFields() {
-    let register_button = document.getElementById('register');
-    let textBox = document.getElementById('Pass');
-    let repeatTextBox = document.getElementById('PassRepeat');
-    let usernametextBox = document.getElementById('Name');
     let emailtextBox = document.getElementById('Email');
-
-    if (__validateUserName(usernametextBox.value)){
-        usernametextBox.style.background = OKCOLOR;
-    }
-    else{
-        usernametextBox.style.background = BADCOLOR;
-    }
-
+    let sendemailButton = document.getElementById('sendemail');
     if (__validateEmail(emailtextBox.value)){
         emailtextBox.style.background = OKCOLOR;
     }
     else{
         emailtextBox.style.background = BADCOLOR;
     }
-    let passwordRules ={
-        password_validation_length :  document.getElementById('password_validation_length'),
-        password_validation_oneupper :  document.getElementById('password_validation_oneupper'),
-        password_validation_onelower :  document.getElementById('password_validation_onelower'),
-        password_validation_special :  document.getElementById('password_validation_special')
-    }
-    if (__testPasswordisAtLeast8Characters(textBox.value)){
-        passwordRules["password_validation_length"].style.color = TEXTOKCOLOR;
-    }
-    else{
-        passwordRules["password_validation_length"].style.color = BADCOLOR;
-    }
-    
-    if (__testPasswordisHasAtLeastOneLowerCaseCharacter(textBox.value)){ 
-        passwordRules["password_validation_onelower"].style.color = TEXTOKCOLOR;
-    }
-    else { 
-        passwordRules["password_validation_onelower"].style.color = BADCOLOR;
-    }
-    
-    if (__testPasswordisHasAtLeastOneUpperCaseCharacter(textBox.value)){ 
-        passwordRules["password_validation_oneupper"].style.color = TEXTOKCOLOR;
-    }
-    else{ 
-        passwordRules["password_validation_oneupper"].style.color = BADCOLOR;
-    }
-
-    if (__testPasswordisHasAtLeastOneSpecialCharacter(textBox.value)){ 
-        passwordRules["password_validation_special"].style.color = TEXTOKCOLOR;
-    }
-    else {
-        passwordRules["password_validation_special"].style.color = BADCOLOR;
-    }
-    
-    let passwordInput = document.getElementById('Pass');
-    if (__testPasswordisAtLeast8Characters(textBox.value) &&
-        __testPasswordisHasAtLeastOneLowerCaseCharacter(textBox.value) &&
-        __testPasswordisHasAtLeastOneUpperCaseCharacter(textBox.value) &&
-        __testPasswordisHasAtLeastOneSpecialCharacter(textBox.value)){ 
-        passwordInput.style.background = OKCOLOR;
-    }
-    else{
-        passwordInput.style.background = BADCOLOR;
-    }
-    if ( __validateRepeat(repeatTextBox.value)){
-        repeatTextBox.style.background = OKCOLOR;
-    }else{
-        repeatTextBox.style.background = BADCOLOR;
-    }
-
-    if (__testPasswordisAtLeast8Characters(textBox.value) &&
-        __testPasswordisHasAtLeastOneLowerCaseCharacter(textBox.value) &&
-        __testPasswordisHasAtLeastOneUpperCaseCharacter(textBox.value) &&
-        __testPasswordisHasAtLeastOneSpecialCharacter(textBox.value) &&
-        __validateEmail(emailtextBox.value) &&
-        __validateUserName(usernametextBox.value) &&
-        __validateRepeat(repeatTextBox.value)){
-            register_button.disabled = false
+    if (__testPasswordisAtLeast8Characters(emailtextBox.value) &&
+        __testPasswordisHasAtLeastOneLowerCaseCharacter(emailtextBox.value) &&
+        __testPasswordisHasAtLeastOneUpperCaseCharacter(emailtextBox.value) &&
+        __testPasswordisHasAtLeastOneSpecialCharacter(emailtextBox.value) &&
+        __validateEmail(emailtextBox.value)){
+            sendemailButton.disabled = false
             __changeButtonColors(BUTTONOKCOLOR);
         }
     else{
-            register_button.disabled = true
+            sendemailButton.disabled = true
             __changeButtonColors(BADCOLOR);
     }
 }
 
 
 function Submit(){
-    let password = document.getElementById('Pass').value;
-    let usernametext = document.getElementById('Name').value;
-    let emailtext = document.getElementById('Email').value;
-    if (password == null || usernametext == null || emailtext == null)
+    let sendEmailValue = document.getElementById('Email').value;
+    if (sendEmailValue == null)
         return;
-    fetch('/create', {
+    fetch('/forgot', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            username : usernametext,
-            email : emailtext,
-            password : password
-        })
+            email : sendEmailValue })
     })
     .then(function(response) {
         if (response.status != 200) {
             window.location.replace("/error");
         }else {
-        window.location.replace("/success");
+        window.location.replace("/login");
         }
     })
     .then(function(_) {
@@ -139,11 +66,6 @@ function __validateEmail(input) {
     return re.test(String(input).toLowerCase());
 }
 
-function __validateUserName(input) {
-    var re = /^[a-zA-Z][a-zA-Z0-9_-]{5,}$/;
-    return re.test(String(input));
-}
-
 function __testPasswordisAtLeast8Characters(input){
     var re = /^.{8,}$/;
     return re.test(String(input));
@@ -164,4 +86,7 @@ function __testPasswordisHasAtLeastOneSpecialCharacter(input){
     return re.test(String(input));
 }
 
+function __changeButtonColors(color){
+    document.getElementById('sendemail').style.background = color;
+}
 
