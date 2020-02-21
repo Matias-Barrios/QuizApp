@@ -1,0 +1,14 @@
+#about_container {
+    display: inline-block;
+    width: 98%;
+    height: 100%;
+    border-radius: 3px;
+    padding-top: 20px;
+    padding: 20px;
+    background-color: cornsilk;
+}
+
+#about_description {
+    text-align: left;
+    font: outline;
+}

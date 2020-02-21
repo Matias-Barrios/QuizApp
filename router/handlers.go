@@ -199,3 +199,14 @@ func successCreationHanlder(w http.ResponseWriter, r *http.Request) {
 		log.Println(err.Error())
 	}
 }
+
+func aboutHandler(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/about" && r.Method != "GET" {
+		errorHandler(w, r, http.StatusNotFound)
+		return
+	}
+	err := views.ViewAbout.Execute(w, nil)
+	if err != nil {
+		log.Println(err.Error())
+	}
+}

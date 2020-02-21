@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Linux Quiz</title>
+    <meta name="description" content="Linux Quiz">
+    <meta name="author" content="Matias Barrios">
+    <link rel="stylesheet" href="static/AboutV/style.css">
+    <link rel="stylesheet" href="static/style.css">
+    <link rel="stylesheet" href="static/bootstrap/css/bootstrap.css">
+    <script src="static/bootstrap/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <div class="topnav">
+        <a class="active" href="/index">Home</a>
+        <a href="/logout" class="righty" ><div>Logout : <b>{{ .User.Name }}</b></div></a>
+        <a href="/contact" class="righty" >Contact</a>
+        <a href="/about" class="righty" >About</a>
+    </div>
+    <div id="about_container">
+        <p id="about_description"> 
+            This is a free and open source application. 
+            Feel free to share it, distribute it, modify it and use it in whatever manner you see fit.
+
+            The goal of this application is to share knowledge and test yourself about an awesome OS as Linux is.
+        </p>
+
+        <p id="about_description"> 
+            The source code can be found at  : <a href="https://github.com/Matias-Barrios/QuizApp">Github</a>
+            <br> Please feel free to pull request the repo and I could take a look and merge it into the application to make it better.
+            It's currently using MariaDB as its data layer.
+        </p>
+
+        <p id="about_description"> 
+            <h4>About the author </h4>
+            You can contact me with suggestions or any comments at  <a href="soymatiasbarrios@gmail.com">soymatiasbarrios@gmail.com</a>
+            <br> Montevideo, Uruguay. 2020.
+        </p>
+    </div>
+</body>
+</html>
