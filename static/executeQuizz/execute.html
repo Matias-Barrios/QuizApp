@@ -32,6 +32,9 @@
             <input type="radio" id="{{ $q.ID }}" name="{{ $q.ID }}" value="{{$o}}">
             <label for="{{ $q.ID }}">{{$o}}</label><br>
             {{end}}
+        {{ else if eq $mode "multi" }}
+            <input type="checkbox" id="{{ $q.ID }}" name="{{ $q.ID }}" value="{{$o}}">
+            <label for="{{ $q.ID }}">{{$o}}</label><br>
         {{ end}}
     </div>
    {{ end }}
