@@ -23,15 +23,14 @@ function validate(ID) {
           },
           body: JSON.stringify(answer)
         });
+        console.log("Coloring!");
         const solved = await rawResponse.json();
-      
         solved.answers.forEach(element => {
-          if (element.passed)
-            Array.from(document.getElementsByClassName('question_container'))
-          .filter(ans => ans.questionID == element.name)[0].style.background="#4bc96c";
-          else
-            Array.from(document.getElementsByClassName('question_container'))
-          .filter(ans => ans.questionID == element.name)[0].style.background="#e86d6d";
+          if (element.passed) {
+            document.getElementById('question_' + element.questionID).style.background="#4bc96c";
+          }else{
+            document.getElementById('question_' + element.questionID).style.background="#e86d6d";
+          }
         });
 
         document.getElementById('validate_quiz').style.display = "none";

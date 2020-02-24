@@ -25,7 +25,7 @@
         <h6> {{ .Quiz.Description }} </h6>
     </div>
    {{range $q := .Quiz.Questions}} 
-    <div class="question_container" name="{{ $q.ID }}" >
+    <div id="question_{{$q.ID}}" class="question_container" >
         <p><h4>{{ $q.Question }}</h4></p>
         {{ $mode := $q.Mode }} {{ if eq $mode "single" }}
             {{range $o := $q.Options}}
