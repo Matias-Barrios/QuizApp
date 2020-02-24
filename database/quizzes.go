@@ -2,6 +2,7 @@ package database
 
 import (
 	"encoding/json"
+	"log"
 	"strconv"
 
 	"github.com/Matias-Barrios/QuizApp/models"
@@ -21,6 +22,7 @@ func GetQuizzes(userid, offset int) ([]models.Quiz, int, error) {
 			   LIMIT 10 OFFSET ?
 		`, userid, offset)
 	if err != nil {
+		log.Println(err.Error())
 		return nil, 0, err
 	}
 	var count int
@@ -30,11 +32,13 @@ func GetQuizzes(userid, offset int) ([]models.Quiz, int, error) {
 		var completed bool
 		err := rows.Scan(&id, &completed, &content, &count)
 		if err != nil {
+			log.Println(err.Error())
 			return nil, 0, err
 		}
 		var q models.Quiz
 		err = json.Unmarshal([]byte(content), &q)
 		if err != nil {
+			log.Println(err.Error())
 			return nil, 0, err
 		}
 		q.ID = strconv.Itoa(id)
@@ -57,6 +61,7 @@ func GetQuizzByID(id string) (models.Quiz, error) {
 	var quizz models.Quiz
 	err = json.Unmarshal([]byte(data), &quizz)
 	if err != nil {
+		log.Println(err.Error())
 		return models.Quiz{}, err
 	}
 	quizz.ID = id
@@ -71,6 +76,7 @@ func SetQuizzAsCompleted(user_id int, id string) error {
 		VALUES (?, ?)
 		`, user_id, id)
 	if err != nil {
+		log.Println(err.Error())
 		return err
 	}
 	return nil

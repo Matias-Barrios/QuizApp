@@ -41,7 +41,7 @@ func CreateConnection() *sql.DB {
 
 	db, err := sql.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", dbuser, dbpassword, dbaddress, dbport, dbnamespace))
 	if err != nil {
-		panic(err.Error())
+		log.Fatalln(err.Error())
 	}
 	return db
 }

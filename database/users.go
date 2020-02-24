@@ -28,6 +28,7 @@ func GetUser(password, email string) (models.User, error) {
 				)
 	`, email, time.Now().Add(-10*time.Minute).UTC().Unix()).Scan(&user.ID, &user.Name, &user.Email, &user.Password)
 	if err != nil {
+		log.Println(err.Error())
 		return models.User{}, err
 	}
 	if CheckPasswordHash(password, user.Password) {
@@ -47,6 +48,7 @@ func GetUser(password, email string) (models.User, error) {
 func CreateUser(username, password, email string) error {
 	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
 	if err != nil {
+		log.Println(err.Error())
 		return err
 	}
 	_, err = sqlConnection.Exec(`INSERT INTO Users 
@@ -55,6 +57,7 @@ func CreateUser(username, password, email string) error {
 						 (?,?,?,?,?)`, username, string(bytes), email, time.Now().UTC().Unix(), true)
 
 	if err != nil {
+		log.Println(err.Error())
 		return err
 	}
 	return nil

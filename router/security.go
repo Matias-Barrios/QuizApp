@@ -27,6 +27,7 @@ func TokenHandler(w http.ResponseWriter, r *http.Request) {
 
 	user, err := database.GetUser(password, username)
 	if err != nil {
+		log.Println(err.Error())
 		http.Redirect(w, r, "/login", 302)
 		return
 	}
@@ -40,6 +41,7 @@ func TokenHandler(w http.ResponseWriter, r *http.Request) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	tokenString, err := token.SignedString([]byte(APP_KEY))
 	if err != nil {
+		log.Println(err.Error())
 		http.Redirect(w, r, "/login", 302)
 		return
 	}
@@ -57,17 +59,19 @@ func AuthMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		auth, err := r.Cookie("token")
 		if err != nil {
+			log.Println(err.Error())
 			http.Redirect(w, r, "/login", 302)
 			return
 		}
-		token, error := jwt.Parse(auth.Value, func(token *jwt.Token) (interface{}, error) {
+		token, err := jwt.Parse(auth.Value, func(token *jwt.Token) (interface{}, error) {
 			if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 				log.Println("Error decrypting token")
 				return nil, fmt.Errorf("Internal server error")
 			}
 			return []byte(APP_KEY), nil
 		})
-		if error != nil {
+		if err != nil {
+			log.Println(err.Error())
 			http.Redirect(w, r, "/login", 302)
 			return
 		}

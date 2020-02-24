@@ -35,12 +35,14 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err != nil {
+		log.Println(err.Error())
 		offset = 0
 	} else {
 		offset = int(offsetv)
 	}
 	qs, count, err := database.GetQuizzes(claims.User.ID, offset)
 	if err != nil {
+		log.Println(err.Error())
 		http.Redirect(w, r, "/login", 302)
 		return
 	}
@@ -108,6 +110,7 @@ func executeQuizzHanlder(w http.ResponseWriter, r *http.Request) {
 	}
 	quizz, err := database.GetQuizzByID(keys[0])
 	if err != nil {
+		log.Println(err.Error())
 		errorHandler(w, r, http.StatusNotFound)
 		return
 	}
@@ -137,11 +140,13 @@ func errorHandler(w http.ResponseWriter, r *http.Request, status int) {
 func getClaims(w http.ResponseWriter, r *http.Request) models.Claim {
 	token, err := r.Cookie("token")
 	if err != nil {
+		log.Println(err.Error())
 		http.Redirect(w, r, "/login", 302)
 		return models.Claim{}
 	}
 	claims := &models.Claim{}
 	_, err = jwt.ParseWithClaims(token.Value, claims, func(token *jwt.Token) (interface{}, error) {
+		//log.Println(err.Error())
 		return APP_KEY, nil
 	})
 	return *claims
@@ -168,6 +173,7 @@ func createUserHandler(w http.ResponseWriter, r *http.Request) {
 	registerBody := models.RegisterBody{}
 	err := decoder.Decode(&registerBody)
 	if err != nil {
+		log.Println(err.Error())
 		http.Redirect(w, r, "/error", 302)
 		return
 	}
@@ -180,6 +186,7 @@ func createUserHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	err = database.CreateUser(registerBody.Username, registerBody.Password, registerBody.Email)
 	if err != nil {
+		log.Println(err.Error())
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	} else {
