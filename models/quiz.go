@@ -5,6 +5,7 @@ type Question struct {
 	ID       string   `json:"id"`
 	Mode     string   `json:"mode"`
 	Question string   `json:"question"`
+	Image    string   `json:"image"`
 	Options  []string `json:"options"`
 	Answers  []string `json:"answers"`
 }
