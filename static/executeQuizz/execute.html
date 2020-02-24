@@ -33,8 +33,10 @@
             <label for="{{ $q.ID }}">{{$o}}</label><br>
             {{end}}
         {{ else if eq $mode "multi" }}
+             {{range $o := $q.Options}}
             <input type="checkbox" id="{{ $q.ID }}" name="{{ $q.ID }}" value="{{$o}}">
             <label for="{{ $q.ID }}">{{$o}}</label><br>
+            {{end}}
         {{ end}}
     </div>
    {{ end }}
