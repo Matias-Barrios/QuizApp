@@ -55,6 +55,21 @@ func TokenHandler(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
+func getClaims(w http.ResponseWriter, r *http.Request) models.Claim {
+	token, err := r.Cookie("token")
+	if err != nil {
+		log.Println(err.Error())
+		http.Redirect(w, r, "/login", 302)
+		return models.Claim{}
+	}
+	claims := &models.Claim{}
+	_, err = jwt.ParseWithClaims(token.Value, claims, func(token *jwt.Token) (interface{}, error) {
+		//log.Println(err.Error())
+		return APP_KEY, nil
+	})
+	return *claims
+}
+
 func AuthMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		auth, err := r.Cookie("token")

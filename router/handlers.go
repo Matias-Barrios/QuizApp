@@ -11,7 +11,6 @@ import (
 	"github.com/Matias-Barrios/QuizApp/database"
 	"github.com/Matias-Barrios/QuizApp/models"
 	"github.com/Matias-Barrios/QuizApp/views"
-	"github.com/dgrijalva/jwt-go"
 )
 
 // Hanlders definitions
@@ -137,21 +136,6 @@ func errorHandler(w http.ResponseWriter, r *http.Request, status int) {
 	}
 }
 
-func getClaims(w http.ResponseWriter, r *http.Request) models.Claim {
-	token, err := r.Cookie("token")
-	if err != nil {
-		log.Println(err.Error())
-		http.Redirect(w, r, "/login", 302)
-		return models.Claim{}
-	}
-	claims := &models.Claim{}
-	_, err = jwt.ParseWithClaims(token.Value, claims, func(token *jwt.Token) (interface{}, error) {
-		//log.Println(err.Error())
-		return APP_KEY, nil
-	})
-	return *claims
-}
-
 func registerHandler(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/register" && r.Method != "GET" {
 		errorHandler(w, r, http.StatusNotFound)
@@ -202,6 +186,17 @@ func successCreationHanlder(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	err := views.ViewSuccessCreation.Execute(w, nil)
+	if err != nil {
+		log.Println(err.Error())
+	}
+}
+
+func changePasswordHanlder(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/changepassword" && r.Method != "GET" {
+		errorHandler(w, r, http.StatusNotFound)
+		return
+	}
+	err := views.ViewChangePassword.Execute(w, nil)
 	if err != nil {
 		log.Println(err.Error())
 	}

@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Change password at Linux Quiz App</title>
+    <meta name="description" content="Linux Quiz">
+    <meta name="author" content="Matias Barrios">
+    <link rel="stylesheet" href="static/style.css">
+    <link rel="stylesheet" href="static/chamgepassword/style.css">
+    <link rel="stylesheet" href="static/bootstrap/css/bootstrap.css">
+    <script src="static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="static/changepassword/main.js"></script>
+</head>
+
+<body>
+    <div id="logo_container">
+        <img src="static/images/logo_quiz_app.png"></img>
+            <div class="login_container">
+                <p>
+                    <input autocomplete="off" id="Current" type="text" placeholder="Enter username" name="Name" required oninput="ValidateFields()" onchange="ValidateFields()">
+                </p>
+                <p>
+                    <input autocomplete="off" id="Pass" type="password" placeholder="Enter password" name="Pass" required oninput="ValidateFields()" onchange="ValidateFields()">
+                </p>
+                <p>
+                    <input autocomplete="off" id="PassRepeat" type="password" placeholder="Repeat password" name="PassRepeat" required oninput="ValidateFields()" onchange="ValidateFields()">
+                </p>
+                <div>
+                    <p class="password_rules" id="password_validation_length" > * Password must have at least 8 characters </p>
+                    <p class="password_rules" id="password_validation_oneupper" > * Password must have at least 1 uppercase character </p>
+                    <p class="password_rules" id="password_validation_onelower" > * Password must have at least 1 lowercase character </p>
+                    <p class="password_rules" id="password_validation_special" > * Password must have at least 1 special character </p>
+                    <p>
+                        <button id="change" class="q-button" onclick="Submit()" >Change</button>
+                    </p>
+                </div>
+            </div>
+    </div>
+</body>
+
+</html>
