@@ -16,7 +16,7 @@
     <div class="topnav">
         <a class="active" href="/index">Home</a>
         <a href="/logout" class="righty" ><div>Logout : <b>{{ .User.Name }}</b></div></a>
-        <a href="/changepassword" class="righty" >Change Password</a>
+        <a href="/change" class="righty" >Change Password</a>
         <a href="/about" class="righty" >About</a>
     </div>
     {{ $length := len .Quizzes }} {{ if gt $length 0 }}

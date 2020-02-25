@@ -1,6 +1,7 @@
 package router
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -105,4 +106,49 @@ func forgotHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println(err.Error())
 	}
+}
+
+func changepasswordPOSTHandler(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/changepassword" && r.Method != "POST" {
+		errorHandler(w, r, http.StatusNotFound)
+		return
+	}
+	decoder := json.NewDecoder(r.Body)
+	changePasswordBody := models.ChangePasswordBody{}
+	err := decoder.Decode(&changePasswordBody)
+	if err != nil {
+		log.Println(err.Error())
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	claims := getClaims(w, r)
+
+	_, err = database.GetUser(changePasswordBody.CurrentPassword, claims.User.Email)
+	if err != nil {
+		log.Println(err.Error())
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	if changePasswordBody.NewPassword != changePasswordBody.RepeatNewPassword {
+		log.Println(err.Error())
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	eightormore, lower, upper, symbol := verifyPassword(changePasswordBody.NewPassword)
+	if !eightormore || !lower || !upper || !symbol {
+		log.Println(err.Error())
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	err = database.UpdateUserPassword(claims.User.ID, changePasswordBody.NewPassword)
+	if err != nil {
+		log.Println(err.Error())
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	w.Header().Add("Content-Type", "application/json")
+	w.Write([]byte(`{ "status" : "success" }`))
+	return
 }

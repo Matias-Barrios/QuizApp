@@ -28,7 +28,8 @@ func GetRouter() *http.ServeMux {
 	mux.Handle("/index", AuthMiddleware(http.HandlerFunc(indexHandler)))
 	mux.Handle("/execute", AuthMiddleware(http.HandlerFunc(executeQuizzHanlder)))
 	mux.Handle("/validate", AuthMiddleware(http.HandlerFunc(validateQuizzHanlder)))
-	mux.Handle("/changepassword", AuthMiddleware(http.HandlerFunc(changePasswordHanlder)))
+	mux.Handle("/change", AuthMiddleware(http.HandlerFunc(changePasswordHanlder)))
+	mux.Handle("/changepassword", AuthMiddleware(http.HandlerFunc(changepasswordPOSTHandler)))
 
 	// Unprotected endpoints
 	mux.HandleFunc("/login", loginHandler)

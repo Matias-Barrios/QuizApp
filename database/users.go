@@ -62,3 +62,23 @@ func CreateUser(username, password, email string) error {
 	}
 	return nil
 }
+
+// UpdateUserPassword :
+func UpdateUserPassword(id int, password string) error {
+	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
+	if err != nil {
+		log.Println(err.Error())
+		return err
+	}
+	_, err = sqlConnection.Exec(`
+								UPDATE Users
+								SET password_encrypted = ?
+								WHERE id = ? 
+								`, string(bytes), id)
+
+	if err != nil {
+		log.Println(err.Error())
+		return err
+	}
+	return nil
+}

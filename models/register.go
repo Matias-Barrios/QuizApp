@@ -6,3 +6,10 @@ type RegisterBody struct {
 	Password string `json:"password"`
 	Email    string `json:"email"`
 }
+
+// ChangePasswordBody :
+type ChangePasswordBody struct {
+	CurrentPassword   string `json:"currentpassword"`
+	NewPassword       string `json:"password"`
+	RepeatNewPassword string `json:"repeatpassword"`
+}
