@@ -2,7 +2,9 @@ package router
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
+	"time"
 
 	"github.com/Matias-Barrios/QuizApp/database"
 	"github.com/Matias-Barrios/QuizApp/models"
@@ -27,9 +29,21 @@ func validateQuizzHanlder(w http.ResponseWriter, r *http.Request) {
 	}
 	err = validate(claims.User.ID, quizz, &solution)
 	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
 		w.Header().Set("Content-Type", "application/json")
 		json.NewEncoder(w).Encode(solution)
 		return
+	}
+	if solution.PercentageCompleted > 80 {
+		err = database.Log(r.RemoteAddr, claims.User.Email, time.Now().UTC().Unix(), "QUIZCOMPLETED", "User has completed a Quiz.")
+		if err != nil {
+			log.Println(err.Error())
+		}
+	} else {
+		err = database.Log(r.RemoteAddr, claims.User.Email, time.Now().UTC().Unix(), "QUIZFAILED", "User has failed to complete a Quiz.")
+		if err != nil {
+			log.Println(err.Error())
+		}
 	}
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(solution)

@@ -36,6 +36,14 @@ CREATE TABLE Unsuccessful_login_attempts (
   FOREIGN KEY (user_id) REFERENCES Users (id)
 );
 
+CREATE TABLE LOGS (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  remote_ip VARCHAR(50) NOT NULL,
+  email VARCHAR(50) NOT NULL,
+  occurred_on BIGINT UNSIGNED NOT NULL,
+  comment VARCHAR(120) NOT NULL
+);
+
 
 DELIMITER $$
 CREATE TRIGGER check_username_validity BEFORE INSERT ON Users

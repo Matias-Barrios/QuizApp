@@ -89,6 +89,10 @@ func logoutHandler(w http.ResponseWriter, r *http.Request) {
 		Value:   "",
 		Expires: time.Now().Add(time.Minute * 800),
 	}
+	err := database.Log(r.RemoteAddr, "", time.Now().UTC().Unix(), "LOGOUT", "A user has logged out")
+	if err != nil {
+		log.Println(err.Error())
+	}
 	http.SetCookie(w, &notoken)
 	http.Redirect(w, r, "/login", 302)
 }
@@ -170,10 +174,18 @@ func createUserHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	err = database.CreateUser(registerBody.Username, registerBody.Password, registerBody.Email)
 	if err != nil {
+		err = database.Log(r.RemoteAddr, registerBody.Email, time.Now().UTC().Unix(), "USERCREATIONERROR", err.Error())
+		if err != nil {
+			log.Println(err.Error())
+		}
 		log.Println(err.Error())
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	} else {
+		err = database.Log(r.RemoteAddr, registerBody.Email, time.Now().UTC().Unix(), "USERCREATED", "A new user has been created")
+		if err != nil {
+			log.Println(err.Error())
+		}
 		w.Header().Add("Content-Type", "application/json")
 		w.Write([]byte(`{ "status" : "success" }`))
 		return

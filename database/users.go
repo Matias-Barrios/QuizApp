@@ -38,6 +38,7 @@ func GetUser(password, email string) (models.User, error) {
 		INSERT INTO Unsuccessful_login_attempts (user_id, attempted_on)
 		VALUES((SELECT id FROM Users WHERE email = ?),?)
 	`, email, time.Now().UTC().Unix())
+
 	if err != nil {
 		log.Println(err.Error())
 	}

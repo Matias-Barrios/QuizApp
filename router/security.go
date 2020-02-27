@@ -46,6 +46,10 @@ func TokenHandler(w http.ResponseWriter, r *http.Request) {
 
 	user, err := database.GetUser(password, username)
 	if err != nil {
+		err = database.Log(r.RemoteAddr, username, time.Now().UTC().Unix(), "UNSUCCESSFULLOGINATTEMPT", err.Error())
+		if err != nil {
+			log.Println(err.Error())
+		}
 		log.Println(err.Error())
 		http.Redirect(w, r, "/login", 302)
 		return
@@ -56,6 +60,10 @@ func TokenHandler(w http.ResponseWriter, r *http.Request) {
 			// In JWT, the expiry time is expressed as unix milliseconds
 			ExpiresAt: time.Now().Add(800 * time.Minute).Unix(),
 		},
+	}
+	err = database.Log(r.RemoteAddr, user.Email, time.Now().UTC().Unix(), "LOGIN", "User successfully logged in.")
+	if err != nil {
+		log.Println(err.Error())
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	tokenString, err := token.SignedString([]byte(APP_KEY))
@@ -93,6 +101,7 @@ func AuthMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		auth, err := r.Cookie("token")
 		if err != nil {
+
 			log.Println(err.Error())
 			http.Redirect(w, r, "/login", 302)
 			return
@@ -105,6 +114,10 @@ func AuthMiddleware(next http.Handler) http.Handler {
 			return []byte(APP_KEY), nil
 		})
 		if err != nil {
+			suberr := database.Log(r.RemoteAddr, "", time.Now().UTC().Unix(), "TOKENERROR", err.Error())
+			if suberr != nil {
+				log.Println(suberr.Error())
+			}
 			log.Println(err.Error())
 			http.Redirect(w, r, "/login", 302)
 			return
@@ -156,6 +169,10 @@ func sendNewPasswordHandler(w http.ResponseWriter, r *http.Request) {
 		log.Println(err.Error())
 		w.WriteHeader(http.StatusBadRequest)
 		return
+	}
+	err = database.Log(r.RemoteAddr, sendNewPassword.Email, time.Now().UTC().Unix(), "PASSWORDRESET", "User has reseted its password.")
+	if err != nil {
+		log.Println(err.Error())
 	}
 }
 
