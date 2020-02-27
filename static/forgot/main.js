@@ -12,11 +12,7 @@ function ValidateFields() {
     else{
         emailtextBox.style.background = BADCOLOR;
     }
-    if (__testPasswordisAtLeast8Characters(emailtextBox.value) &&
-        __testPasswordisHasAtLeastOneLowerCaseCharacter(emailtextBox.value) &&
-        __testPasswordisHasAtLeastOneUpperCaseCharacter(emailtextBox.value) &&
-        __testPasswordisHasAtLeastOneSpecialCharacter(emailtextBox.value) &&
-        __validateEmail(emailtextBox.value)){
+    if (__validateEmail(emailtextBox.value)){
             sendemailButton.disabled = false
             __changeButtonColors(BUTTONOKCOLOR);
         }
@@ -43,7 +39,7 @@ function Submit(){
         if (response.status != 200) {
             window.location.replace("/error");
         }else {
-        window.location.replace("/login");
+            window.location.replace("/login");
         }
     })
     .then(function(_) {

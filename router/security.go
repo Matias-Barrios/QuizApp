@@ -108,6 +108,26 @@ func forgotHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func sendNewPasswordHandler(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/sendtp" && r.Method != "GET" {
+		errorHandler(w, r, http.StatusNotFound)
+		return
+	}
+	decoder := json.NewDecoder(r.Body)
+	sendNewPassword := models.SendNewPassword{}
+	err := decoder.Decode(&sendNewPassword)
+	if err != nil {
+		log.Println(err.Error())
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	err := views.ViewForgot.Execute(w, nil)
+	if err != nil {
+		log.Println(err.Error())
+	}
+}
+
 func changepasswordPOSTHandler(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/changepassword" && r.Method != "POST" {
 		errorHandler(w, r, http.StatusNotFound)

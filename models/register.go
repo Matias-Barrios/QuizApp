@@ -13,3 +13,8 @@ type ChangePasswordBody struct {
 	NewPassword       string `json:"password"`
 	RepeatNewPassword string `json:"repeatpassword"`
 }
+
+// SendNewPassword :
+type SendNewPassword struct {
+	Email string `json:"email"`
+}
