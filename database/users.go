@@ -82,3 +82,27 @@ func UpdateUserPassword(id int, password string) error {
 	}
 	return nil
 }
+
+func SetNewPassword(email, password string) error {
+	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
+	if err != nil {
+		log.Println(err.Error())
+		return err
+	}
+	_, err = sqlConnection.Exec(`
+		IF (SELECT count(*) FROM Users WHERE email = ? ) < 1 
+		THEN 
+		SIGNAL SQLSTATE '12345' SET MESSAGE_TEXT = 'Unauthorized';
+		ELSE
+			UPDATE Users 
+			SET password_encrypted = ? 
+			WHERE email = ?;
+		END IF
+	`, email, string(bytes), email)
+
+	if err != nil {
+		log.Println(err.Error())
+		return err
+	}
+	return nil
+}

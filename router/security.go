@@ -1,10 +1,14 @@
 package router
 
 import (
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"log"
+	"math/rand"
 	"net/http"
+	"net/smtp"
+	"strings"
 	"time"
 
 	"github.com/Matias-Barrios/QuizApp/database"
@@ -12,6 +16,20 @@ import (
 	"github.com/Matias-Barrios/QuizApp/views"
 	"github.com/dgrijalva/jwt-go"
 )
+
+func init() {
+	rand.Seed(time.Now().UnixNano())
+}
+
+var alphabet = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
+
+func randomString(n int) string {
+	res := make([]rune, n)
+	for i := range res {
+		res[i] = alphabet[rand.Intn(len(alphabet))]
+	}
+	return string(res)
+}
 
 // Claims :
 var Claims models.Claim
@@ -121,10 +139,23 @@ func sendNewPasswordHandler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
+	newPassword := randomString(12)
 
-	err := views.ViewForgot.Execute(w, nil)
+	err = database.SetNewPassword(sendNewPassword.Email, newPassword)
 	if err != nil {
 		log.Println(err.Error())
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	body := fmt.Sprintf(`
+		You can now login to LinuxQuizApp using this password : %s
+		Remember to change it as soon as you login again!
+	`, newPassword)
+	if err := sendMail("127.0.0.1:25", "LinuxQuizApp", "You have requested a temporary passoword", body, []string{sendNewPassword.Email}); err != nil {
+		log.Println(err.Error())
+		w.WriteHeader(http.StatusBadRequest)
+		return
 	}
 }
 
@@ -171,4 +202,45 @@ func changepasswordPOSTHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Content-Type", "application/json")
 	w.Write([]byte(`{ "status" : "success" }`))
 	return
+}
+
+func sendMail(addr, from, subject, body string, to []string) error {
+	r := strings.NewReplacer("\r\n", "", "\r", "", "\n", "", "%0a", "", "%0d", "")
+
+	c, err := smtp.Dial(addr)
+	if err != nil {
+		return err
+	}
+	defer c.Close()
+	if err = c.Mail(r.Replace(from)); err != nil {
+		return err
+	}
+	for i := range to {
+		to[i] = r.Replace(to[i])
+		if err = c.Rcpt(to[i]); err != nil {
+			return err
+		}
+	}
+
+	w, err := c.Data()
+	if err != nil {
+		return err
+	}
+
+	msg := "To: " + strings.Join(to, ",") + "\r\n" +
+		"From: " + from + "\r\n" +
+		"Subject: " + subject + "\r\n" +
+		"Content-Type: text/html; charset=\"UTF-8\"\r\n" +
+		"Content-Transfer-Encoding: base64\r\n" +
+		"\r\n" + base64.StdEncoding.EncodeToString([]byte(body))
+
+	_, err = w.Write([]byte(msg))
+	if err != nil {
+		return err
+	}
+	err = w.Close()
+	if err != nil {
+		return err
+	}
+	return c.Quit()
 }
