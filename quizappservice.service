@@ -1,0 +1,20 @@
+[Unit]
+Description=Quiz App
+ConditionPathExists=/opt/quizapp
+After=network.target
+ 
+[Service]
+Type=simple
+User=root
+Group=root
+LimitNOFILE=1024
+
+Restart=on-failure
+RestartSec=10
+startLimitIntervalSec=60
+
+WorkingDirectory=/opt/quizapp
+ExecStart=/opt/quizapp/quiz
+ 
+[Install]
+WantedBy=multi-user.target
