@@ -11,6 +11,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/Matias-Barrios/QuizApp/config"
 	"github.com/Matias-Barrios/QuizApp/database"
 	"github.com/Matias-Barrios/QuizApp/models"
 	"github.com/Matias-Barrios/QuizApp/views"
@@ -19,16 +20,6 @@ import (
 
 func init() {
 	rand.Seed(time.Now().UnixNano())
-}
-
-var alphabet = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
-
-func randomString(n int) string {
-	res := make([]rune, n)
-	for i := range res {
-		res[i] = alphabet[rand.Intn(len(alphabet))]
-	}
-	return string(res)
 }
 
 // Claims :
@@ -152,7 +143,7 @@ func sendNewPasswordHandler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	newPassword := randomString(12)
+	newPassword := config.RandomString(12)
 
 	err = database.SetNewPassword(sendNewPassword.Email, newPassword)
 	if err != nil {

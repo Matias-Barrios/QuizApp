@@ -40,3 +40,12 @@ body {
     font-family: "verdana";
     color: midnightblue;
 }
+
+#captchadiv {
+    border-radius: 4px;
+}
+
+#captchaimage {
+    border-radius: 4px;
+    border: 2px solid gainsboro;
+}

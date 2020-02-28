@@ -2,10 +2,12 @@ package router
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"regexp"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/Matias-Barrios/QuizApp/database"
@@ -145,7 +147,17 @@ func registerHandler(w http.ResponseWriter, r *http.Request) {
 		errorHandler(w, r, http.StatusNotFound)
 		return
 	}
-	err := views.ViewRegister.Execute(w, nil)
+	id, captchapath, err := database.GenerateCapctha(r.RemoteAddr)
+	if err != nil {
+		log.Println(err.Error())
+		http.Redirect(w, r, "/error", 302)
+		return
+	}
+	captcha := models.RegisterCaptcha{
+		ID:   id,
+		Path: captchapath,
+	}
+	err = views.ViewRegister.Execute(w, captcha)
 	if err != nil {
 		log.Println(err.Error())
 	}
@@ -162,6 +174,7 @@ func createUserHandler(w http.ResponseWriter, r *http.Request) {
 	err := decoder.Decode(&registerBody)
 	if err != nil {
 		log.Println(err.Error())
+		w.WriteHeader(http.StatusBadRequest)
 		http.Redirect(w, r, "/error", 302)
 		return
 	}
@@ -169,7 +182,18 @@ func createUserHandler(w http.ResponseWriter, r *http.Request) {
 	validemail := regexp.MustCompile("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")
 	eightormore, lower, upper, symbol := verifyPassword(registerBody.Password)
 	if !eightormore || !lower || !upper || !symbol || !validusername.Match([]byte(registerBody.Username)) || !validemail.Match([]byte(registerBody.Email)) {
+		w.WriteHeader(http.StatusBadRequest)
 		http.Redirect(w, r, "/error", 302)
+		return
+	}
+	captcha, err := database.GetCaptcha(registerBody.CaptchaID)
+	if err != nil || strings.ToLower(strings.TrimSpace(registerBody.Solution)) != strings.ToLower(strings.TrimSpace(captcha.Result)) {
+		if err != nil {
+			log.Println(err.Error())
+		} else {
+			log.Println(fmt.Sprintf("Failed to test captcha from %s with result %s", r.RemoteAddr, registerBody.Solution))
+		}
+		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 	err = database.CreateUser(registerBody.Username, registerBody.Password, registerBody.Email)

@@ -99,6 +99,9 @@ function Submit(){
     let password = document.getElementById('Pass').value;
     let usernametext = document.getElementById('Name').value;
     let emailtext = document.getElementById('Email').value;
+    let captchaid = document.getElementById('captchadiv').getAttribute('value');
+    let captchasolution = document.getElementById('CaptchaSolution').value;
+    
     if (password == null || usernametext == null || emailtext == null)
         return;
     fetch('/create', {
@@ -109,7 +112,9 @@ function Submit(){
         body: JSON.stringify({
             username : usernametext,
             email : emailtext,
-            password : password
+            password : password,
+            captchaid : parseInt(captchaid),
+            solution : captchasolution
         })
     })
     .then(function(response) {
