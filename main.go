@@ -17,10 +17,19 @@ func main() {
 	defer f.Close()
 	log.SetOutput(f)
 	envF := config.EnvironmentFetcher{}
+	qcertificatekey, err := envF.GetValue("QCERTIFICATEKEY")
+	if err != nil {
+		log.Fatalln(err.Error())
+	}
+	qcertificatecrt, err := envF.GetValue("QCERTIFICATECRT")
+	if err != nil {
+		log.Fatalln(err.Error())
+	}
 	port, err := envF.GetValue("PORT")
 	if err != nil {
 		log.Fatalln(err.Error())
 	}
 	log.Println("Starting app in port : ", port)
-	http.ListenAndServe(":"+port, router.GetRouter())
+	err = http.ListenAndServeTLS(":"+port, qcertificatecrt, qcertificatekey, router.GetRouter())
+	log.Println(err.Error())
 }
