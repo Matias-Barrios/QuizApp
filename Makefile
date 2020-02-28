@@ -16,7 +16,7 @@ build-linux:
 build-macos:
 	CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 $(GOBUILD) -o $(BINARY_NAME_MACOS) -v
 
-build-install-linux:
+install-linux:
 	mkdir -p /opt/quizapp
 	mv static /opt/quizapp/static
 	mv quiz /opt/quizapp/quiz
