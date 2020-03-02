@@ -6,19 +6,48 @@
     <title>Linux Quiz</title>
     <meta name="description" content="Linux Quiz">
     <meta name="author" content="Matias Barrios">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="static/indexV/style.css">
     <link rel="stylesheet" href="static/style.css">
-    <link rel="stylesheet" href="static/bootstrap/css/bootstrap.css">
-    <script src="static/bootstrap/js/bootstrap.min.js"></script>
+    
 </head>
 
 <body>
-    <div class="topnav">
-        <a class="active" href="/index">Home</a>
-        <a href="/logout" class="righty" ><div>Logout : <b>{{ .User.Name }}</b></div></a>
-        <a href="/change" class="righty" >Change Password</a>
-        <a href="/about" class="righty" >About</a>
-    </div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">LinuxQuizApp</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="active" href="/index">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/change">Change Password</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/logout"><div>Logout : <b>{{ .User.Name }}</b></div></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
     {{ $length := len .Quizzes }} {{ if gt $length 0 }}
     {{ if gt $.Total 10 }}
     <div class="pagination_container" >
@@ -26,7 +55,7 @@
         {{ $items :=  mod $.Total 10}}
         {{ $end := (increment $items -2 )}}
         {{ range $y := intRange 0 $end}}
-            <a class="pagination_item" href="/index?offset={{multiply . 10}}"> {{ increment . 1}}</a>
+        <a class="pagination_item" href="/index?offset={{multiply . 10}}"> {{ increment . 1}}</a>
         {{end}}
         <a class="pagination_item" href="/index?offset={{multiply $end 10}}"> end</a>
     </div>
@@ -34,9 +63,9 @@
     <div class="quizzes_container" >
         
         {{range $val := .Quizzes}}
-            <div class="quizz">
-                <div class="quizz_info" >
-                    <p id="quiz_ID_title" ><h3><u></s><b>Id :</b> <span id="quiz_ID">{{ $val.ID}} </span> </u></h1></p>
+        <div class="quizz">
+            <div class="quizz_info" >
+                <p id="quiz_ID_title" ><h3><u></s><b>Id :</b> <span id="quiz_ID">{{ $val.ID}} </span> </u></h1></p>
                     <p class="quiz_data" ><b>Author :</b> {{ $val.Author}} </p>
                     <p class="quiz_data" ><b>Description :</b> {{ $val.Description}} </p>
                     <p class="quiz_data" ><b>Number of questions :</b> {{ len $val.Questions }} </p>
@@ -46,30 +75,30 @@
                         <img class="take_quizz" src="static/images/play.png" />
                     </a>
                     {{ if $val.Completed }}
-                        <img class="completed_image" src="static/images/tickgreen.png" />
+                    <img class="completed_image" src="static/images/tickgreen.png" />
                     {{ else }}
-                        <img class="completed_image" src="static/images/tickgray.png" />
+                    <img class="completed_image" src="static/images/tickgray.png" />
                     {{ end }}
                 </div>
             </div>
-        {{end}} 
-    </div>
+            {{end}} 
+        </div>
         {{ if gt $.Total 10 }}
         <div class="pagination_container" >
             <a class="pagination_item" href="/index?offset=0"> start</a>
             {{ $items :=  mod $.Total 10}}
             {{ $end := (increment $items -2 )}}
             {{ range $y := intRange 0 $end}}
-                <a class="pagination_item" href="/index?offset={{multiply . 10}}"> {{ increment . 1}}</a>
+            <a class="pagination_item" href="/index?offset={{multiply . 10}}"> {{ increment . 1}}</a>
             {{end}}
             <a class="pagination_item" href="/index?offset={{multiply $end 10}}"> end</a>
         </div>
         {{ end }}
-    {{ else }}
-    <div class="quizzes_container" >
-        <p><h3></s><b> Not available courses at the moment!</h1></p>
-    </div>
-    {{ end }}
-</body>
-
-</html>
+        {{ else }}
+        <div class="quizzes_container" >
+            <p><h3></s><b> Not available courses at the moment!</h1></p>
+            </div>
+            {{ end }}
+        </body>
+        
+        </html>
