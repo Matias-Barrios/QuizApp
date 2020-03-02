@@ -18,10 +18,10 @@ build-macos:
 
 install-linux:
 	mkdir -p /opt/quizapp
-	mv static /opt/quizapp/static
+	cp -r static /opt/quizapp/static
 	mv quiz /opt/quizapp/quiz
 	cp quizapp.env /opt/quizapp/quizapp.env
 	chmod -R 550 /opt/quizapp
-	mv quizappservice.service /lib/systemd/system/quizappservice.service
+	cp quizappservice.service /lib/systemd/system/quizappservice.service
 	chmod ag+r /lib/systemd/system/quizappservice.service
 
