@@ -1,0 +1,1 @@
+Here capcthas images are placed.

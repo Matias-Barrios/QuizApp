@@ -11,9 +11,10 @@ LimitNOFILE=1024
 
 Restart=on-failure
 RestartSec=10
-
+EnvironmentFile=/opt/quizapp/quizapp.env
 WorkingDirectory=/opt/quizapp
 ExecStart=/opt/quizapp/quiz
+
  
 [Install]
 WantedBy=multi-user.target
