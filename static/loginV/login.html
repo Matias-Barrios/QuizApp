@@ -1,44 +1,51 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <title>Linux Quiz</title>
     <meta name="description" content="Linux Quiz">
     <meta name="author" content="Matias Barrios">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="static/style.css">
     <link rel="stylesheet" href="static/loginV/style.css">
-    <link rel="stylesheet" href="static/bootstrap/css/bootstrap.css">
-    <script src="static/bootstrap/js/bootstrap.min.js"></script>
 </head>
-
 <body>
-    <div id="logo_container">
-        <img src="static/images/logo_quiz_app.png"></img>
-
-        <form action="/auth" method="post">
-            <div class="login_container">
-                <p>
-                    <label for="username"><b>Username</b></label>
-                    <input type="text" placeholder="Enter Email" name="username" required>
-                </p>
-                <p>
-                    <label for="password"><b>Password</b></label>
-                    <input type="password" placeholder="Enter Password" name="password" required>
-                </p>
-                <p>
-                    <button type="submit" class="q-button">Login</button>
-                    <input type="checkbox" checked="checked" name="remember"> Remember Me! </input>
-                </p>
-                <p>
-                    <a href="/register"> Register now! </input>
-                </p>
-                <p>
-                    <a href="/forgot"> Forgot Password? </input>
-                </p>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                <img id="logo_image" src="static/images/logo_quiz_app.png"></img>
             </div>
-        </form>
-    </div>
-</body>
-
-</html>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <form action="/auth" method="post">
+                    <div class="login_container">
+                        <p>
+                            <label for="username"><b>Username</b></label>
+                            <input type="text" placeholder="Enter Email" name="username" required>
+                        </p>
+                        <p>
+                            <label for="password"><b>Password</b></label>
+                            <input type="password" placeholder="Enter Password" name="password" required>
+                        </p>
+                        <p>
+                            <button type="submit" class="q-button">Login</button>
+                            <input type="checkbox" checked="checked" name="remember"> Remember Me! </input>
+                        </p>
+                        <p>
+                            <a href="/register"> Register now! </input>
+                            </p>
+                            <p>
+                                <a href="/forgot"> Forgot Password? </input>
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+        </body>
+        </html>

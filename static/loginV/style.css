@@ -12,14 +12,7 @@ body {
     text-align: center;
 }
 
-#logo_container {
-    margin: auto;
-    width: 90%;
-    height: 100%;
-    text-align: center;
-}
-
-#logo_container>img {
+#logo_image {
     display: inline-block;
     width: 70%;
     height: 70%;

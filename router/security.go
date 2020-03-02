@@ -37,11 +37,11 @@ func TokenHandler(w http.ResponseWriter, r *http.Request) {
 
 	user, err := database.GetUser(password, username)
 	if err != nil {
+		log.Println(err.Error())
 		err = database.Log(r.RemoteAddr, username, time.Now().UTC().Unix(), "UNSUCCESSFULLOGINATTEMPT", err.Error())
 		if err != nil {
 			log.Println(err.Error())
 		}
-		log.Println(err.Error())
 		http.Redirect(w, r, "/login", 302)
 		return
 	}

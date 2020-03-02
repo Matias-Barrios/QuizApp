@@ -57,19 +57,22 @@ func getRandomCaptcha() (string, string) {
 
 func addLabel(img *image.RGBA, x, y int, label string) {
 	col := color.RGBA{200, 100, 0, 255}
-	point := fixed.Point26_6{fixed.Int26_6(x * 64), fixed.Int26_6(y * 64)}
-
-	d := &font.Drawer{
-		Dst:  img,
-		Src:  image.NewUniform(col),
-		Face: basicfont.Face7x13,
-		Dot:  point,
+	var offset int
+	for _, v := range strings.Split(label, "##") {
+		point := fixed.Point26_6{fixed.Int26_6(x * 30), fixed.Int26_6(y*30 + offset)}
+		d := &font.Drawer{
+			Dst:  img,
+			Src:  image.NewUniform(col),
+			Face: basicfont.Face7x13,
+			Dot:  point,
+		}
+		d.DrawString(v)
+		offset += 700
 	}
-	d.DrawString(label)
 }
 
 func createImageForCaptcha() (string, string, error) {
-	img := image.NewRGBA(image.Rect(0, 0, 700, 100))
+	img := image.NewRGBA(image.Rect(0, 0, 250, 100))
 	captchaQ, captchaA := getRandomCaptcha()
 	addLabel(img, 20, 30, captchaQ)
 	captchapath := "static/captchas/" + config.RandomString(20) + ".png"
