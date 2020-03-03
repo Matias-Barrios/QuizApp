@@ -91,3 +91,26 @@ body {
     height: 50px;
     text-align: center;
 }
+
+.nav-item { 
+    padding: 5px;
+    margin: 5px;
+    color: rgb(60, 60, 60) !important;
+}
+a {
+    color: rgb(34, 34, 34) !important;
+}
+
+.navbar {
+    background: rgb(88,191,219);
+    background: linear-gradient(90deg, rgba(88,191,219,1) 0%, rgba(43,143,205,1) 35%, rgba(23,161,212,1) 100%);
+    border: 2px solid rgb(55, 123, 142);;
+}
+
+.navbar-toggler {
+    background: rgb(63, 81, 221);
+}
+
+body {
+    text-align: center !important;
+}

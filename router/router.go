@@ -25,6 +25,7 @@ func GetRouter() *http.ServeMux {
 	mux := http.NewServeMux()
 
 	// Protected endpoints
+	mux.Handle("/", AuthMiddleware(http.HandlerFunc(indexHandler)))
 	mux.Handle("/index", AuthMiddleware(http.HandlerFunc(indexHandler)))
 	mux.Handle("/execute", AuthMiddleware(http.HandlerFunc(executeQuizzHanlder)))
 	mux.Handle("/validate", AuthMiddleware(http.HandlerFunc(validateQuizzHanlder)))

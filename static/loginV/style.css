@@ -9,7 +9,7 @@ html>* {
 body {
     display: inline-block;
     background-color: #f1f3f1 !important;
-    text-align: center;
+    text-align: center !important;
 }
 
 #logo_image {
@@ -20,8 +20,12 @@ body {
     max-height: 300px;
     padding: 20px;
 }
+.container {
+    display: inline-block !important;
+}
 
-.login_container {
-    width: 100%;
-    height: 100%;
+.centered {
+    display: inline-block !important;
+    float : none !important;
+    margin: 0 auto !important;
 }

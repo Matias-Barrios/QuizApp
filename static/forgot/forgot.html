@@ -6,32 +6,42 @@
     <title>Forgot Password?</title>
     <meta name="description" content="Linux Quiz">
     <meta name="author" content="Matias Barrios">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="static/bootstrap-4.3.1-dist/css/bootstrap.css">
+    <script src="static/jquery.min.js"></script>
+    <script src="static/popper.min.js"></script>
+    <script src="static/bootstrap-4.3.1-dist/js/bootstrap.min.js"></script>
+    <!-- ----- -->
     <link rel="stylesheet" href="static/style.css">
     <link rel="stylesheet" href="static/forgot/style.css">
-    <link rel="stylesheet" href="static/bootstrap/css/bootstrap.css">
-    <script src="static/bootstrap/js/bootstrap.min.js"></script>
     <script src="static/forgot/main.js"></script>
 </head>
 
 <body>
-    <div id="logo_container">
-        <img src="static/images/logo_quiz_app.png"></img>
-            <div class="login_container">
-                <p>
-                    <span id="forgot_description"> Please enter your email id and an a message will be sent with a temporary password.</span>
-                </p>
-                <p>
-                    <span id="forgot_description"> Be aware the email might end up in your spam folder!</span>
-                </p>
-                <p>
-                    <input autocomplete="off" id="Email" type="text" placeholder="Enter username" name="Name" required oninput="ValidateFields()" onchange="ValidateFields()">
-                </p>
-                <div>
-                    <p>
-                        <button disabled="true" id="sendemail" class="q-button" onclick="Submit()" >Send new email</button>
-                    </p>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2 centered">
+                <div id="logo_container">
+                    <img src="static/images/logo_quiz_app.png"></img>
+                    <div class="login_container">
+                        <p>
+                            <span id="forgot_description"> Please enter your email id and an a message will be sent with a temporary password.</span>
+                        </p>
+                        <p>
+                            <span id="forgot_description"> Be aware the email might end up in your spam folder!</span>
+                        </p>
+                        <p>
+                            <input autocomplete="off" id="Email" type="text" placeholder="Enter username" name="Name" required oninput="ValidateFields()" onchange="ValidateFields()">
+                        </p>
+                        <div>
+                            <p>
+                                <button disabled="true" id="sendemail" class="q-button" onclick="Submit()" >Send new email</button>
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </div>
     </div>
 </body>
 

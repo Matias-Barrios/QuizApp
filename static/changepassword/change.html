@@ -6,36 +6,47 @@
     <title>Change password at Linux Quiz App</title>
     <meta name="description" content="Linux Quiz">
     <meta name="author" content="Matias Barrios">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="static/bootstrap-4.3.1-dist/css/bootstrap.css">
+    <script src="static/jquery.min.js"></script>
+    <script src="static/popper.min.js"></script>
+    <script src="static/bootstrap-4.3.1-dist/js/bootstrap.min.js"></script>
+    <!-- ----- -->
     <link rel="stylesheet" href="static/style.css">
     <link rel="stylesheet" href="static/changepassword/style.css">
-    <link rel="stylesheet" href="static/bootstrap/css/bootstrap.css">
-    <script src="static/bootstrap/js/bootstrap.min.js"></script>
     <script src="static/changepassword/main.js"></script>
 </head>
 
 <body>
-    <div id="logo_container">
-        <img src="static/images/logo_quiz_app.png"></img>
-            <div class="login_container">
-                <p>
-                    <input autocomplete="off" id="Current" type="password" placeholder="Enter current password" name="Name" required oninput="ValidateFields()" onchange="ValidateFields()">
-                </p>
-                <p>
-                    <input autocomplete="off" id="Pass" type="password" placeholder="Enter new password" name="Pass" required oninput="ValidateFields()" onchange="ValidateFields()">
-                </p>
-                <p>
-                    <input autocomplete="off" id="PassRepeat" type="password" placeholder="Repeat new password" name="PassRepeat" required oninput="ValidateFields()" onchange="ValidateFields()">
-                </p>
-                <div>
-                    <p class="password_rules" id="password_validation_length" > * Password must have at least 8 characters </p>
-                    <p class="password_rules" id="password_validation_oneupper" > * Password must have at least 1 uppercase character </p>
-                    <p class="password_rules" id="password_validation_onelower" > * Password must have at least 1 lowercase character </p>
-                    <p class="password_rules" id="password_validation_special" > * Password must have at least 1 special character </p>
-                    <p>
-                        <button disabled="true" id="change" class="q-button" onclick="Submit()" >Change</button>
-                    </p>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2 centered">
+                
+                <div id="logo_container">
+                    <img src="static/images/logo_quiz_app.png"></img>
+                    <div class="login_container">
+                        <p>
+                            <input autocomplete="off" id="Current" type="password" placeholder="Enter current password" name="Name" required oninput="ValidateFields()" onchange="ValidateFields()">
+                        </p>
+                        <p>
+                            <input autocomplete="off" id="Pass" type="password" placeholder="Enter new password" name="Pass" required oninput="ValidateFields()" onchange="ValidateFields()">
+                        </p>
+                        <p>
+                            <input autocomplete="off" id="PassRepeat" type="password" placeholder="Repeat new password" name="PassRepeat" required oninput="ValidateFields()" onchange="ValidateFields()">
+                        </p>
+                        <div>
+                            <p class="password_rules" id="password_validation_length" > * Password must have at least 8 characters </p>
+                            <p class="password_rules" id="password_validation_oneupper" > * Password must have at least 1 uppercase character </p>
+                            <p class="password_rules" id="password_validation_onelower" > * Password must have at least 1 lowercase character </p>
+                            <p class="password_rules" id="password_validation_special" > * Password must have at least 1 special character </p>
+                            <p>
+                                <button disabled="true" id="change" class="q-button" onclick="Submit()" >Change</button>
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </div>
     </div>
 </body>
 
