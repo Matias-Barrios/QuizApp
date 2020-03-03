@@ -9,7 +9,10 @@
     border-color: rgb(128,162,206);
     border-width: 1px solid;
     box-shadow: 5px 10px #888888;
-    background-color: rgb(254, 253, 241);
+    background-color: rgb(254, 253, 241) !important;
+    text-align: left;
+    padding: 20px;
+    margin: 20px;
 }
 
 .title_and_description > h5,h6 {
@@ -23,6 +26,7 @@
 
 .validate_quiz {
     padding: 20px;
+    margin: 20px;
 }
 
 
@@ -74,4 +78,9 @@
 .question_image {
     max-width: 600px;
     max-width: 400px;
+}
+
+.row {
+    padding: 5px;
+    margin: 5px;
 }

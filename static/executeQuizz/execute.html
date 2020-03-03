@@ -6,49 +6,78 @@
     <title>Linux Quiz</title>
     <meta name="description" content="Linux Quiz">
     <meta name="author" content="Matias Barrios">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="static/bootstrap-4.3.1-dist/css/bootstrap.css">
+    <script src="static/jquery.min.js"></script>
+    <script src="static/popper.min.js"></script>
+    <script src="static/bootstrap-4.3.1-dist/js/bootstrap.min.js"></script>
+    <link href="static/fontawesome-free-5.12.1-web/css/all.css" rel="stylesheet">
+    <script defer src="static/fontawesome-free-5.12.1-web/js/all.js"></script>
+    <!-- ----- -->
     <link rel="stylesheet" href="static/executeQuizz/style.css">
     <link rel="stylesheet" href="static/style.css">
-    <link rel="stylesheet" href="static/bootstrap/css/bootstrap.css">
-    <script src="static/bootstrap/js/bootstrap.min.js"></script>
     <script src="static/executeQuizz/main.js"></script>
 </head>
 
 <body>
-    <div class="topnav">
-        <a class="active" href="/index">Home</a>
-        <a href="/logout" class="righty" ><div>Logout : <b>{{ .User.Name }}</b></div></a>
-        <a href="/contact" class="righty" >Contact</a>
-        <a href="/about" class="righty" >About</a>
-    </div>
-    <div class="title_and_description" >
-        <h5> {{ .Quiz.ID }} </h5>
-        <h6> {{ .Quiz.Description }} </h6>
-    </div>
-   {{range $q := .Quiz.Questions}} 
-    <div id="question_{{$q.ID}}" class="question_container" >
-        <p><h4>{{ $q.Question }}</h4></p>
-        {{ if ne $q.Image "" }}
-            <p><img src="static/qimages/{{$q.Image}}" class="question_image"> </img></p>
-        {{ end}}
-        {{ $mode := $q.Mode }} {{ if eq $mode "single" }}
-            {{range $o := $q.Options}}
-            <p><input type="radio" id="{{ $q.ID }}" name="{{ $q.ID }}" value="{{$o}}">
-            <label for="{{ $q.ID }}">{{$o}}</label><br></p>
-            {{end}}
-        {{ else if eq $mode "multi" }}
-             {{range $o := $q.Options}}
-            <p><input type="checkbox" id="{{ $q.ID }}" name="{{ $q.ID }}" value="{{$o}}">
-            <label for="{{ $q.ID }}">{{$o}}</label><br></p>
-            {{end}}
-        {{ end}}
-    </div>
-   {{ end }}
-    <div id="validate_quiz" class="validate_quiz">
-        <button type="submit" class="validate_button" onclick="validate('{{.Quiz.ID}}')">Validate</button>
-    </div>
-    <div id="percentage_completed" class="percentage_completed">
-        <p id="percentage_completed_text"></p>
-    </div>
-</body>
-
-</html>
+    <nav class="navbar navbar-expand-lg static-top">
+        <div class="container">
+            <a class="navbar-brand" href="/index">LinuxQuizApp</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="active" href="/index">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/change">Change Password</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/logout"><div>Logout : <b>{{ .User.Name }}</b></div></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        {{range $q := .Quiz.Questions}} 
+        <div class="row">
+            <div class="col centered">
+                <div id="question_{{$q.ID}}" class="question_container" >
+                    <p><h4>{{ $q.Question }}</h4></p>
+                    {{ if ne $q.Image "" }}
+                    <p><img src="static/qimages/{{$q.Image}}" class="question_image"> </img></p>
+                    {{ end}}
+                    {{ $mode := $q.Mode }} {{ if eq $mode "single" }}
+                    {{range $o := $q.Options}}
+                    <p><input type="radio" id="{{ $q.ID }}" name="{{ $q.ID }}" value="{{$o}}" />
+                        <label for="{{ $q.ID }}">{{$o}}</label><br></p>
+                        {{end}}
+                        {{ else if eq $mode "multi" }}
+                        {{range $o := $q.Options}}
+                        <p><input type="checkbox" id="{{ $q.ID }}" name="{{ $q.ID }}" value="{{$o}}"/>
+                            <label for="{{ $q.ID }}">{{$o}}</label><br></p>
+                            {{end}}
+                            {{ end}}
+                    </div>
+                    </div>
+                </div>
+                {{ end }} 
+                <div class="row">
+                    <div class="col centered">
+                        <div id="validate_quiz" class="validate_quiz">
+                            <button type="submit" class="validate_button" onclick="validate('{{.Quiz.ID}}')">Validate</button>
+                        </div>
+                        <div id="percentage_completed" class="percentage_completed">
+                            <p id="percentage_completed_text"></p>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+        </body>
+        </html>

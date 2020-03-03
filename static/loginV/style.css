@@ -20,12 +20,3 @@ body {
     max-height: 300px;
     padding: 20px;
 }
-.container {
-    display: inline-block !important;
-}
-
-.centered {
-    display: inline-block !important;
-    float : none !important;
-    margin: 0 auto !important;
-}

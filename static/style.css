@@ -114,3 +114,38 @@ a {
 body {
     text-align: center !important;
 }
+
+.container {
+    text-align: center;
+}
+
+.row {
+    text-align: center;
+}
+
+.container {
+    display: inline-block !important;
+    width: 95% !important;
+}
+
+.centered {
+    display: inline-block !important;
+    float : none !important;
+    margin: 0 auto !important;
+}
+
+#logo_container {
+    margin: auto;
+    width: 90%;
+    height: 100%;
+    text-align: center;
+}
+
+#logo_container>img {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    max-width: 300px;
+    max-height: 300px;
+    padding: 20px;
+}
