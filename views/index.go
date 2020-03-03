@@ -1,6 +1,9 @@
 package views
 
-import "text/template"
+import (
+	"math"
+	"text/template"
+)
 
 var funcs = template.FuncMap{
 	"intRange": func(start, end int) []int {
@@ -11,7 +14,12 @@ var funcs = template.FuncMap{
 		}
 		return result
 	},
-	"mod": func(i, j int) int { return i % j },
+	"paging": func(total, pagesize int) int {
+		return int(math.Ceil(float64(total) / float64(pagesize)))
+	},
+	"lastpage": func(total, pagesize int) int {
+		return int(math.Floor(float64(total-1)/float64(pagesize))) * 10
+	},
 	"increment": func(i, j int) int {
 		return i + j
 	},

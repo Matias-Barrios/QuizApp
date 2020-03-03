@@ -46,12 +46,11 @@
     {{ if gt $.Total 10 }}
     <div class="pagination_container" >
         <a class="pagination_item" href="/index?offset=0"> start</a>
-        {{ $items :=  mod $.Total 10}}
-        {{ $end := (increment $items -2 )}}
-        {{ range $y := intRange 0 $end}}
+        {{ $totalpages :=  paging $.Total 10}}
+        {{ range $y := intRange 0 (increment $totalpages -1)}}
         <a class="pagination_item" href="/index?offset={{multiply . 10}}"> {{ increment . 1}}</a>
         {{end}}
-        <a class="pagination_item" href="/index?offset={{multiply $end 10}}"> end</a>
+        <a class="pagination_item" href="/index?offset={{multiply $totalpages 10}}"> end</a>
     </div>
     {{ end }}
     <div class="container">
@@ -85,12 +84,12 @@
         {{ if gt $.Total 10 }}
         <div class="pagination_container" >
             <a class="pagination_item" href="/index?offset=0"> start</a>
-            {{ $items :=  mod $.Total 10}}
-            {{ $end := (increment $items -2 )}}
-            {{ range $y := intRange 0 $end}}
+            {{ $totalpages :=  paging $.Total 10}}
+            {{ $lastpage :=  lastpage $.Total 10}}
+            {{ range $y := intRange 0 (increment $totalpages -1)}}
             <a class="pagination_item" href="/index?offset={{multiply . 10}}"> {{ increment . 1}}</a>
             {{end}}
-            <a class="pagination_item" href="/index?offset={{multiply $end 10}}"> end</a>
+            <a class="pagination_item" href="/index?offset={{$lastpage}}"> end</a>
         </div>
         {{ end }}
         {{ else }}
