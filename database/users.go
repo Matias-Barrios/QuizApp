@@ -3,6 +3,7 @@ package database
 import (
 	"fmt"
 	"log"
+	"strings"
 	"time"
 
 	"github.com/Matias-Barrios/QuizApp/models"
@@ -11,6 +12,7 @@ import (
 
 // GetUser :
 func GetUser(password, email string) (models.User, error) {
+	email = strings.ToLower(email)
 	var user models.User
 	err := sqlConnection.QueryRow(`
 		SELECT id,name, email, password_encrypted
@@ -47,6 +49,7 @@ func GetUser(password, email string) (models.User, error) {
 
 // CreateUser :
 func CreateUser(username, password, email string) error {
+	email = strings.ToLower(email)
 	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
 	if err != nil {
 		log.Println(err.Error())
@@ -85,6 +88,7 @@ func UpdateUserPassword(id int, password string) error {
 }
 
 func SetNewPassword(email, password string) error {
+	email = strings.ToLower(email)
 	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
 	if err != nil {
 		log.Println(err.Error())
