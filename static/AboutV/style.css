@@ -11,4 +11,6 @@
 #about_description {
     text-align: left;
     font: outline;
+    font-size: xx-large !important;
+    font: "Times New Roman", Times, serif !important;
 }

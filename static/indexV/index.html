@@ -61,10 +61,10 @@
                 <div class="quizzes_container" >
                     <div class="quizz">
                         <div class="quizz_info" >
-                            <p id="quiz_ID_title" ><h3><u></s><b>Id :</b> <span id="quiz_ID">{{ $val.ID}} </span> </u></h1></p>
-                                <p class="quiz_data" ><b>Author :</b> {{ $val.Author}} </p>
-                                <p class="quiz_data" ><b>Description :</b> {{ $val.Description}} </p>
-                                <p class="quiz_data" ><b>Number of questions :</b> {{ len $val.Questions }} </p>
+                            <p id="quiz_ID_title" ><h1><u></s><b>Id :</b> <span id="quiz_ID">{{ $val.ID}} </span> </u></h1></p>
+                                <p class="quiz_data" ><h3><b>Author :</b> {{ $val.Author}} </h3></p>
+                                <p class="quiz_data" ><h3><b>Description :</b>{{ $val.Description}}  </h3></p>
+                                <p class="quiz_data" ><h3><b>Number of questions :</b>{{ len $val.Questions }}  </h3></p>
                             </div>
                             <div class="image_centered" >
                                 <a href="/execute?quizz={{ $val.ID }}">
@@ -95,9 +95,8 @@
         {{ end }}
         {{ else }}
         <div class="quizzes_container" >
-            <p><h3></s><b> Not available courses at the moment!</h1></p>
+            <p><h1><b> Not available courses at the moment!</b></h1></p>
             </div>
             {{ end }}
         </body>
-        
-        </html>
+</html>

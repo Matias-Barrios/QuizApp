@@ -49,19 +49,19 @@
         <div class="row">
             <div class="col centered">
                 <div id="question_{{$q.ID}}" class="question_container" >
-                    <p><h4>{{ $q.Question }}</h4></p>
+                    <p><h2>{{ $q.Question }}</h4></p>
                     {{ if ne $q.Image "" }}
                     <p><img src="static/qimages/{{$q.Image}}" class="question_image"> </img></p>
                     {{ end}}
                     {{ $mode := $q.Mode }} {{ if eq $mode "single" }}
                     {{range $o := $q.Options}}
                     <p><input type="radio" id="{{ $q.ID }}" name="{{ $q.ID }}" value="{{$o}}" />
-                        <label for="{{ $q.ID }}">{{$o}}</label><br></p>
+                        <label class="qoption" for="{{ $q.ID }}">{{$o}}</label><br></p>
                         {{end}}
                         {{ else if eq $mode "multi" }}
                         {{range $o := $q.Options}}
                         <p><input type="checkbox" id="{{ $q.ID }}" name="{{ $q.ID }}" value="{{$o}}"/>
-                            <label for="{{ $q.ID }}">{{$o}}</label><br></p>
+                            <label class="qoption" for="{{ $q.ID }}">{{$o}}</label><br></p>
                             {{end}}
                             {{ end}}
                     </div>

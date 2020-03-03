@@ -5,16 +5,28 @@
     <title>Linux Quiz</title>
     <meta name="description" content="Linux Quiz">
     <meta name="author" content="Matias Barrios">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="static/bootstrap-4.3.1-dist/css/bootstrap.css">
+    <script src="static/jquery.min.js"></script>
+    <script src="static/popper.min.js"></script>
+    <script src="static/bootstrap-4.3.1-dist/js/bootstrap.min.js"></script>
+    <!-- ----- -->
     <link rel="stylesheet" href="static/style.css">
     <link rel="stylesheet" href="static/successCreation/style.css">
     <script src="static/successCreation/successcreation.js"></script>
 </head>
 
 <body>
-    <div id="successcreation_container">
-        <img id="logo" src="static/images/logo_quiz_app.png"></img>
-        <h5><p id="account_created_text"> The operation completed successfully! You will get redirected to the login page shortly. If not, please cick <a href="/login"> here</a></p></h3>
-    </div>
-</body>
-
+    <div id="container successcreation_container">
+        <div class="row">
+            <div class="col centered">
+                <img id="logo" src="static/images/logo_quiz_app.png"></img>
+                <p id="account_created_text"> <h2>
+                    The operation completed successfully! <br> 
+                    You will get redirected to the login page shortly. If not, please cick 
+                    <a href="/login">here</a></h2></p>
+                </div>
+            </div>
+        </div>
+    </body>
 </html>
