@@ -5,12 +5,48 @@
     <title>Linux Quiz</title>
     <meta name="description" content="Linux Quiz">
     <meta name="author" content="Matias Barrios">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="static/bootstrap-4.3.1-dist/css/bootstrap.css">
+    <script src="static/jquery.min.js"></script>
+    <script src="static/popper.min.js"></script>
+    <script src="static/bootstrap-4.3.1-dist/js/bootstrap.min.js"></script>
+    <link href="static/fontawesome-free-5.12.1-web/css/all.css" rel="stylesheet">
+    <script defer src="static/fontawesome-free-5.12.1-web/js/all.js"></script>
+    <!-- ----- -->
+    <link rel="stylesheet" href="static/style.css">
     <link rel="stylesheet" href="static/notFound404/style.css">
 </head>
 
 <body>
-    <div id="404_container">
-        <img src="static/images/404.png"></img>
+    <nav class="navbar navbar-expand-lg static-top">
+        <div class="container">
+            <a class="navbar-brand" href="/index">LinuxQuizApp</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="active" href="/index">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/change">Change Password</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col centered">
+                <div id="404_container">
+                    <img src="static/images/404.png"></img>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 

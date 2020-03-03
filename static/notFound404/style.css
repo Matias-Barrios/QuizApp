@@ -1,5 +1,12 @@
 #404_container {
     width: 90%;
-    height: 100%
+    height: 100%;
+    text-align: center;
+}
+
+#404_container > img {
+    display: inline-block;
+    margin: auto;
+    float: none;
 }
 
