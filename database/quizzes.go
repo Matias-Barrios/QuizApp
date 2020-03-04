@@ -71,10 +71,13 @@ func GetQuizzByID(id string) (models.Quiz, error) {
 //  SetQuizzAsCompleted :
 func SetQuizzAsCompleted(user_id int, id string) error {
 	_, err := sqlConnection.Exec(`
-		INSERT INTO Users_Completed_Quizzes
-		(user_id,quiz_id)
-		VALUES (?, ?)
-		`, user_id, id)
+			IF (SELECT count(*) FROM Users_Completed_Quizzes WHERE user_id  = ? AND quiz_id = ?) = 0 
+			THEN
+			INSERT INTO Users_Completed_Quizzes
+					(user_id,quiz_id)
+					VALUES (?, ?);
+			END IF
+		`, user_id, id, user_id, id)
 	if err != nil {
 		log.Println(err.Error())
 		return err
