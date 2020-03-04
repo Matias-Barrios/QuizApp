@@ -60,6 +60,10 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println(err.Error())
 	}
+	err = database.Log(r.RemoteAddr, claims.User.Email, time.Now().UTC().Unix(), "VISITED", "User has landed on the home page")
+	if err != nil {
+		log.Println(err.Error())
+	}
 }
 
 func loginHandler(w http.ResponseWriter, r *http.Request) {
