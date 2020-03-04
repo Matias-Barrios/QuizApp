@@ -90,6 +90,10 @@ func getClaims(w http.ResponseWriter, r *http.Request) models.Claim {
 
 func AuthMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		cerr := database.Log(r.RemoteAddr, "", time.Now().UTC().Unix(), "CONNECTIONATTEMPT", "An user has attempted to connect")
+		if cerr != nil {
+			log.Println(cerr.Error())
+		}
 		auth, err := r.Cookie("token")
 		if err != nil {
 
