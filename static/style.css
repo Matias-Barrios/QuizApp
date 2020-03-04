@@ -162,3 +162,11 @@ a {
     font: "Times New Roman", Times, serif !important;
 }
 
+input[type=radio],
+input[type=checkbox] {
+    border: 0px !important;
+    width: 30px !important;
+    height: 30px !important;
+    padding-right: 6px;
+    margin-right: 6px;
+}

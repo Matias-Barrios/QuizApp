@@ -55,12 +55,12 @@
                     {{ end}}
                     {{ $mode := $q.Mode }} {{ if eq $mode "single" }}
                     {{range $o := $q.Options}}
-                    <p><input type="radio" id="{{ $q.ID }}" name="{{ $q.ID }}" value="{{$o}}" />
+                    <p><input class="question_option" type="radio" id="{{ $q.ID }}" name="{{ $q.ID }}" value="{{$o}}" />
                         <label class="qoption" for="{{ $q.ID }}">{{$o}}</label><br></p>
                         {{end}}
                         {{ else if eq $mode "multi" }}
                         {{range $o := $q.Options}}
-                        <p><input type="checkbox" id="{{ $q.ID }}" name="{{ $q.ID }}" value="{{$o}}"/>
+                        <p><input class="question_option" type="checkbox" id="{{ $q.ID }}" name="{{ $q.ID }}" value="{{$o}}"/>
                             <label class="qoption" for="{{ $q.ID }}">{{$o}}</label><br></p>
                             {{end}}
                             {{ end}}
