@@ -14,4 +14,4 @@ You should set the following values:
 
 // TODO
 
-## Quizapp - Developed by Matias Barrios in 2020
+## Quizapp - Developed by Matias Barrios in 2020, Montevideo, Uruguay.
