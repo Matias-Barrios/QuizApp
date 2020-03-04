@@ -26,11 +26,8 @@ function validate(ID) {
         const solved = await rawResponse.json();
         solved.answers.forEach(element => {
           if (element.passed) {
-            console.log('THIS IS PASSED question_' + element.questionID);
-            console.log(document.getElementById('question_' + element.questionID));
             document.getElementById('question_' + element.questionID).style.background="#4bc96c";
           }else{
-            console.log('NOT PASSED question_' + element.questionID);
             document.getElementById('question_' + element.questionID).style.background="#e86d6d";
           }
         });
