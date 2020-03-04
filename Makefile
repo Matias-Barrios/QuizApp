@@ -22,7 +22,11 @@ install-linux:
 	cp -r static /opt/quizapp/.
 	mv quiz /opt/quizapp/quiz
 	cp quizapp.env /opt/quizapp/quizapp.env
+	sudo -i sed -i 's/APP_KEY=/APP_KEY=$API_KEY/1' /opt/quizapp/quizapp.env
+	sudo -i sed -i 's/DBPASSWORD=/DBPASSWORD=$MARIAPASSWORD/1' /opt/quizapp/quizapp.env
 	chmod -R 550 /opt/quizapp
+	cp /root/server.crt /opt/quizapp/server.crt
+	cp /root/server.key /opt/quizapp/server.key
 	cp quizappservice.service /lib/systemd/system/quizappservice.service
 	chmod ag+r /lib/systemd/system/quizappservice.service
 	systemctl start quizappservice
