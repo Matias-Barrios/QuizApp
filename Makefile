@@ -17,6 +17,7 @@ build-macos:
 	CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 $(GOBUILD) -o $(BINARY_NAME_MACOS) -v
 
 install-linux:
+	systemctl stop quizappservice
 	mkdir -p /opt/quizapp
 	cp -r static /opt/quizapp/static
 	mv quiz /opt/quizapp/quiz
@@ -24,4 +25,5 @@ install-linux:
 	chmod -R 550 /opt/quizapp
 	cp quizappservice.service /lib/systemd/system/quizappservice.service
 	chmod ag+r /lib/systemd/system/quizappservice.service
+	systemctl start quizappservice
 
