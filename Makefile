@@ -19,7 +19,7 @@ build-macos:
 install-linux:
 	systemctl stop quizappservice
 	mkdir -p /opt/quizapp
-	cp -u -r static /opt/quizapp/static
+	cp -r static /opt/quizapp/.
 	mv quiz /opt/quizapp/quiz
 	cp quizapp.env /opt/quizapp/quizapp.env
 	chmod -R 550 /opt/quizapp
