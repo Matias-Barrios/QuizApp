@@ -1,0 +1,361 @@
+{
+    "author": "Matias Barrios",
+    "description": "This is an generic Linux quiz with quesitons that span several different topics. It contains 25 questions. Good luck!",
+    "questions": [
+        {
+            "id": "q1",
+            "mode": "single",
+            "question": "Which of these commands is useful to see the amount of free RAM?",
+            "options": [
+                "ls -lh",
+                "du -s",
+                "df -h",
+                "free -h"
+            ],
+            "answers": [
+                "free -h"
+            ]
+        },
+        {
+            "id": "q2",
+            "mode": "multi",
+            "question": "Which of these are NOT builtin commands in Bash",
+            "options": [
+                "cd",
+                "docker",
+                "printf",
+                "git"
+            ],
+            "answers": [
+                "git",
+                "docker"
+            ]
+        },
+        {
+            "id": "q3",
+            "mode": "single",
+            "question": "Whats the difference between a soft and a hard link?",
+            "options": [
+                "Hard links directly link two files in the same file system and for identification it uses file’s inode number. Soft links are usually an alternative path (or an alias) for the original file; these are also referred to as symbolic links.",
+                "Hard links directly link to a file in a hard drive, while soft links can ( and should ) link to a software reference.",
+                "Hard links use ext4 while soft links use an older file system called ofs.",
+                "Soft links exist only in Windows systems."
+            ],
+            "answers": [
+                "Hard links directly link two files in the same file system and for identification it uses file’s inode number. Soft links are usually an alternative path (or an alias) for the original file; these are also referred to as symbolic links."
+            ]
+        },
+        {
+            "id": "q4",
+            "mode": "single",
+            "question": "What flag would return only the matched pattern in GNU's grep?",
+            "options": [
+                "-p",
+                "-P",
+                "-E",
+                "-o"
+            ],
+            "answers": [
+                "-o"
+            ]
+        },
+        {
+            "id": "q5",
+            "mode": "single",
+            "question": "What configuration file contains mount points definitions?",
+            "options": [
+                "/var/lib/mount",
+                "/etc/fstab",
+                "/etc/shadow",
+                "/usr/bin/mount",
+                "/usr/bin/mountpoints"
+            ],
+            "answers": [
+                "/etc/fstab"
+            ]
+        },
+        {
+            "id": "q6",
+            "mode": "single",
+            "question": "What is the kernel in Linux?",
+            "options": [
+                "The Linux kernel is a software which can be used to get software updates for free.",
+                "It's the module in charge of GPU management in Linux.",
+                "The Linux Kernel is a low-level systems software whose main role is to manage hardware resources",
+                "It is a boot loader for Linux. It is used mainly to load the Linux operating system into main memory so that it can begin its operations."
+            ],
+            "answers": [
+                "It is a boot loader for Linux. It is used mainly to load the Linux operating system into main memory so that it can begin its operations."
+            ]
+        },
+        {
+            "id": "q7",
+            "mode": "single",
+            "question": "What is a swap space?",
+            "options": [
+                "Swap is a space on a disk that is used when the amount of physical RAM memory is full.",
+                "Swap space limits the amount of files a file system can contain.",
+                "Swap space limits where the kernel dumps memory contents for debugging.",
+                "It's the name of the repo used by the Linux foundation software to keep Linux source files."
+            ],
+            "answers": [
+                "Swap is a space on a disk that is used when the amount of physical RAM memory is full."
+            ]
+        },
+        {
+            "id": "q8",
+            "mode": "single",
+            "question": "How do you change file and directory permissions under Linux?",
+            "options": [
+                "Using perm attribute of ext4",
+                "Using chmod and/or Access Control Lists",
+                "Setting the right values in /etc/shadow.",
+                "Using permchange and Access Control Lists"
+            ],
+            "answers": [
+                "Using chmod and/or Access Control Lists"
+            ]
+        },
+        {
+            "id": "q9",
+            "mode": "single",
+            "question": "What makes a file ´hidden´ in Linux?",
+            "options": [
+                "Setting hidden in the file properties.",
+                "Preceding the filename wiht a dot.",
+                "Right click -> Hide file",
+                "Need to set the file as hidden using : chmod +hidden myfile.txt"
+            ],
+            "answers": [
+                "Preceding the filename wiht a dot."
+            ]
+        },
+        {
+            "id": "q10",
+            "mode": "single",
+            "question": "What distribution of Linux does this logo corresponds to?",
+            "image" : "q9_logo_question.png",
+            "options": [
+                "CentOS",
+                "Linux Mint",
+                "Ubuntu",
+                "Debian"
+            ],
+            "answers": [
+                "Debian"
+            ]
+        },
+        {
+            "id": "q11",
+            "mode": "single",
+            "question": "Which command will print your current working directory?",
+            "options": [
+                "curdir",
+                "cd",
+                "basename",
+                "pwd"
+            ],
+            "answers": [
+                "pwd"
+            ]
+        },
+        {
+            "id": "q12",
+            "mode": "single",
+            "question": "Which command can you use to maniipulate JSON input from the terminal?",
+            "options": [
+                "json",
+                "jq",
+                "curl",
+                "pwd"
+            ],
+            "answers": [
+                "jq"
+            ]
+        },
+        {
+            "id": "q13",
+            "mode": "single",
+            "question": "What would the below command output?",
+            "image" : "echo_command_question.png",
+            "options": [
+                "Colo",
+                "Color",
+                "4",
+                "1"
+            ],
+            "answers": [
+                "4"
+            ]
+        },
+        {
+            "id": "q14",
+            "mode": "single",
+            "question": "Are Linux commands case sensitive?",
+            "options": [
+                "Yes",
+                "No"
+            ],
+            "answers": [
+                "Yes"
+            ]
+        },
+        {
+            "id": "q15",
+            "mode": "single",
+            "question": "Is CentOS open source?",
+            "options": [
+                "Yes",
+                "No"
+            ],
+            "answers": [
+                "Yes"
+            ]
+        },
+        {
+            "id": "q16",
+            "mode": "single",
+            "question": "What is redirection in Linux?",
+            "options": [
+                "The action of receiving a file descriptor from the OS.",
+                "It is a technique whereby one object supplies the dependencies of another object. A redirection is an object that can be used, for example as a service.",
+                "Redirection is the capability of moving areas of drive data to a new location.",
+                "Redirection is the process of directing where the output to from a process goes. For instance, it can be used to redirect output from one command to the input of another."
+            ],
+            "answers": [
+                "Redirection is the process of directing where the output to from a process goes. For instance, it can be used to redirect output from one command to the input of another."
+            ]
+        },
+        {
+            "id": "q17",
+            "mode": "single",
+            "question": "What does the command 'mount -a do'?",
+            "options": [
+                "It mounts all drives as configured in /var/mounts.",
+                "It mounts all drives as configured in /etc/fstab.",
+                "It will exit with an error 'No devices found on the system' since it lacks at least one parameter.",
+                "It will not work, the right command is 'mountd'"
+            ],
+            "answers": [
+                "It mounts all drives as configured in /etc/fstab."
+            ]
+        },
+        {
+            "id": "q18",
+            "mode": "single",
+            "question": "What flag allows you to see the contents of a file getting updated as data is appended to it?",
+            "options": [
+                "Using 'tail' command with the '-f' flag.",
+                "Using cat command.",
+                "Using 'awk' with the '-F' flag.",
+                "You can not read a file while another process writes to it."
+            ],
+            "answers": [
+                "Using 'tail' command with the '-f' flag."
+            ]
+        },
+        {
+            "id": "q19",
+            "mode": "single",
+            "question": "What security group does a user need to belong to have sudo permissions on an unmodified CentOS installation?",
+            "options": [
+                "admins",
+                "sudo",
+                "wheel",
+                "users"
+            ],
+            "answers": [
+                "wheel"
+            ]
+        },
+        {
+            "id": "q20",
+            "mode": "single",
+            "question": "What will this command output?",
+            "image" : "awk_question1.png",
+            "options": [
+                "apples",
+                "bananas",
+                "0",
+                "5"
+            ],
+            "answers": [
+                "5"
+            ]
+        },
+        {
+            "id": "q21",
+            "mode": "multi",
+            "question": "Which of these commands would you use to see file systems information?",
+            "options": [
+                "df",
+                "uptime",
+                "lsblk",
+                "lspci"
+            ],
+            "answers": [
+                "df",
+                "lsblk"
+            ]
+        },
+        {
+            "id": "q22",
+            "mode": "single",
+            "question": "What symbol of the below are used for appending data to a file?",
+            "options": [
+                "|",
+                "&",
+                ">>",
+                ">"
+            ],
+            "answers": [
+                ">>"
+            ]
+        },
+        {
+            "id": "q23",
+            "mode": "single",
+            "question": "What's the command 'uptime' used for?",
+            "options": [
+                "Prints current time, how long the system has been running, how many users are currently logged on, and the system load averages for the past 1, 5, and 15 minutes.",
+                "Set the time when the server should bring the critical services up.",
+                "Enables the encryption of disks at certain times of the day.",
+                "This is not a Liux commannd."
+            ],
+            "answers": [
+                "Prints current time, how long the system has been running, how many users are currently logged on, and the system load averages for the past 1, 5, and 15 minutes."
+            ]
+        },
+        {
+            "id": "q24",
+            "mode": "multi",
+            "question": "Which commands have a right syntax from the below list?",
+            "options": [
+                "git add -A .",
+                "ls --color=auto",
+                "cat index.html, main.js",
+                "file-check? $HOME=PATH"
+            ],
+            "answers": [
+                "git add -A .",
+                "ls --color=auto"
+            ]
+        },
+        {
+            "id": "q25",
+            "mode": "multi",
+            "question": "Which distributions are NOT Debian based?",
+            "options": [
+                "Ubuntu",
+                "Linux Mint",
+                "CentOS",
+                "Manjaro"
+            ],
+            "answers": [
+                "CentOS",
+                "Manjaro"
+            ]
+        }
+    ]
+}
+
