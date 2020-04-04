@@ -94,19 +94,14 @@ func SetNewPassword(email, password string) error {
 		log.Println(err.Error())
 		return err
 	}
-	_, err = sqlConnection.Exec(`
-	DELIMITER $
-    BEGIN NOT ATOMIC
-		IF (SELECT count(*) FROM Users WHERE email = ? ) != 1 
+	_, err = sqlConnection.Exec(`IF (SELECT count(*) FROM Users WHERE email = ? ) != 1 
 		THEN 
 		    SIGNAL SQLSTATE '12345' SET MESSAGE_TEXT = 'Unauthorized';
 		ELSE
 			UPDATE Users 
 			SET password_encrypted = ? 
 			WHERE email = ?;
-		END IF
-	END $
-	DELIMITER ;`, email, string(bytes), email)
+		END IF`, email, string(bytes), email)
 
 	if err != nil {
 		log.Println(err.Error())
