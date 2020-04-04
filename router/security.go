@@ -159,8 +159,28 @@ func sendNewPasswordHandler(w http.ResponseWriter, r *http.Request) {
 		log.Println(suberr.Error())
 	}
 	body := fmt.Sprintf(`
-		You can now login to LinuxQuizApp using this password : %s
-		Remember to change it as soon as you login again!
+	Subject: Your password has been reset, Linuxquizapp.com.uy
+	<html>
+		  <div>
+		    <p>
+		      You have reseted your LinuxQuizapp.com.uy password.
+		    </p>
+		      <p>
+		      This is your temporary password: <b><font color="green">%s</font></b>
+		    </p>
+		      <p>
+		     Remember to change it  as soon as you login!
+		    </p>
+		    
+		    <p>
+		     Regards!, 
+		    </p>
+		    
+		    <p>
+		     Linuxquizapp.com.uy
+		    </p>
+		  </div>
+		</html>
 	`, newPassword)
 	if err := smtp.SendMail("mail.linuxquizapp.com.uy:25",
 		nil,
