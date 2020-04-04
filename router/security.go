@@ -174,6 +174,7 @@ func sendNewPasswordHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func changepasswordPOSTHandler(w http.ResponseWriter, r *http.Request) {
+
 	if r.URL.Path != "/changepassword" && r.Method != "POST" {
 		errorHandler(w, r, http.StatusNotFound)
 		return
@@ -187,6 +188,11 @@ func changepasswordPOSTHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	claims := getClaims(w, r)
+	log.Println("Changing password for ", claims.User.Email)
+	suberr := database.Log(r.RemoteAddr, claims.User.Email, time.Now().UTC().Unix(), "PASSWORDCHANGE", err.Error())
+	if suberr != nil {
+		log.Println(suberr.Error())
+	}
 
 	_, err = database.GetUser(changePasswordBody.CurrentPassword, claims.User.Email)
 	if err != nil {
