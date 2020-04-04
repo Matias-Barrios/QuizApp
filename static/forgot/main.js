@@ -27,7 +27,7 @@ function Submit(){
     let sendEmailValue = document.getElementById('Email').value;
     if (sendEmailValue == null)
         return;
-    fetch('/forgot', {
+    fetch('/sendtp', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

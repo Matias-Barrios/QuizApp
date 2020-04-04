@@ -153,7 +153,11 @@ func sendNewPasswordHandler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-
+	log.Println("Changing password for ", sendNewPassword.Email)
+	suberr := database.Log(r.RemoteAddr, sendNewPassword.Email, time.Now().UTC().Unix(), "PASSWORDRESET", err.Error())
+	if suberr != nil {
+		log.Println(suberr.Error())
+	}
 	body := fmt.Sprintf(`
 		You can now login to LinuxQuizApp using this password : %s
 		Remember to change it as soon as you login again!
