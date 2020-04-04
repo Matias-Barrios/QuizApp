@@ -193,7 +193,7 @@ func changepasswordPOSTHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	claims := getClaims(w, r)
 	log.Println("Changing password for ", claims.User.Email)
-	suberr := database.Log(r.RemoteAddr, claims.User.Email, time.Now().UTC().Unix(), "PASSWORDCHANGE", err.Error())
+	suberr := database.Log(r.RemoteAddr, claims.User.Email, time.Now().UTC().Unix(), "PASSWORDCHANGE", "")
 	if suberr != nil {
 		log.Println(suberr.Error())
 	}
