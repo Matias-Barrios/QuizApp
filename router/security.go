@@ -158,9 +158,9 @@ func sendNewPasswordHandler(w http.ResponseWriter, r *http.Request) {
 		You can now login to LinuxQuizApp using this password : %s
 		Remember to change it as soon as you login again!
 	`, newPassword)
-	if err := smtp.SendMail("127.0.0.1:25",
+	if err := smtp.SendMail("mail.linuxquizapp.com.uy:25",
 		nil,
-		"LinuxQuizApp",
+		"mail.linuxquizapp.com.uy",
 		[]string{sendNewPassword.Email},
 		[]byte(body)); err != nil {
 		log.Println(err.Error())
