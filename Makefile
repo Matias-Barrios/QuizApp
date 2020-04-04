@@ -29,5 +29,6 @@ install-linux:
 	cp /root/server.key /opt/quizapp/server.key
 	cp quizappservice.service /lib/systemd/system/quizappservice.service
 	chmod ag+r /lib/systemd/system/quizappservice.service
+	systemctl daemon-reload
 	systemctl start quizappservice
 
