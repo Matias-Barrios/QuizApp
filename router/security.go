@@ -154,7 +154,7 @@ func sendNewPasswordHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	log.Println("Changing password for ", sendNewPassword.Email)
-	suberr := database.Log(r.RemoteAddr, sendNewPassword.Email, time.Now().UTC().Unix(), "PASSWORDRESET", err.Error())
+	suberr := database.Log(r.RemoteAddr, sendNewPassword.Email, time.Now().UTC().Unix(), "PASSWORDRESET", "User has forgotten the password")
 	if suberr != nil {
 		log.Println(suberr.Error())
 	}
