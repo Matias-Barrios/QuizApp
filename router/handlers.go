@@ -202,9 +202,9 @@ func createUserHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	err = database.CreateUser(registerBody.Username, registerBody.Password, registerBody.Email)
 	if err != nil {
-		err = database.Log(r.RemoteAddr, registerBody.Email, time.Now().UTC().Unix(), "USERCREATIONERROR", err.Error())
-		if err != nil {
-			log.Println(err.Error())
+		serr := database.Log(r.RemoteAddr, registerBody.Email, time.Now().UTC().Unix(), "USERCREATIONERROR", err.Error())
+		if serr != nil {
+			log.Println(serr.Error())
 		}
 		log.Println(err.Error())
 		w.WriteHeader(http.StatusBadRequest)
