@@ -43,6 +43,7 @@ func TokenHandler(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/login?error=1", 302)
 		return
 	}
+	user.Password = config.RandomString(10)
 	claims := &models.Claim{
 		User: user,
 		StandardClaims: jwt.StandardClaims{

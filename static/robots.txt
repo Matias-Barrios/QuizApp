@@ -1,0 +1,11 @@
+User-agent: * 
+Disallow: bootstrap-4.3.1-dist
+
+User-agent: * 
+Disallow: captchas
+
+User-agent: * 
+Disallow: fontawesome-free-5.12.1-web
+
+User-agent: * 
+Disallow: qimages
