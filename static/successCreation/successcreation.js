@@ -1,5 +1,5 @@
 
 setTimeout(() => { 
     console.log("redirecting!");
-    window.location.replace("/login");
+    window.location.replace("/index");
 }, 5000);
