@@ -30,6 +30,9 @@ func main() {
 		log.Fatalln(err.Error())
 	}
 	go redirectToHTTPS()
+	log.Println("QCERTIFICATEKEY = ", qcertificatekey)
+	log.Println("QCERTIFICATECRT = ", qcertificatecrt)
+	log.Println("PORT = ", port)
 	log.Println("Starting app in port : ", port)
 	err = http.ListenAndServeTLS(":"+port, qcertificatecrt, qcertificatekey, router.GetRouter())
 	log.Println(err.Error())

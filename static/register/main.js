@@ -118,10 +118,16 @@ function Submit(){
         })
     })
     .then(function(response) {
+        if (response.redirected){
+            window.location.replace(response.url);
+            return;
+        }
         if (response.status != 200) {
             window.location.replace("/error");
+            return;
         }else {
         window.location.replace("/success");
+        return;
         }
     })
     .then(function(_) {

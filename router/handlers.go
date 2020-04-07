@@ -168,7 +168,7 @@ func registerHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	previousFailure, ok := r.URL.Query()["error"]
 	if ok && len(previousFailure) > 0 {
-		captcha.PreviousFailure = previousFailure[0]
+		captcha.PreviousFailure = MapErrorMessage(previousFailure[0])
 	}
 	err = views.ViewRegister.Execute(w, captcha)
 	if err != nil {
