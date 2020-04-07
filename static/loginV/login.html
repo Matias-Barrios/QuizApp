@@ -35,6 +35,11 @@
                             <label for="password"><b>Password</b></label>
                             <input type="password" autocapitalize="none" placeholder="Enter Password" name="password" required />
                         </p>
+                        {{ if ne $.Message "" }}
+                            <p class="error_message">
+                                {{$.Message}}
+                            </p>
+                        {{ end }}
                         <p>
                             <button type="submit" class="q-button">Login</button>
                         </p>

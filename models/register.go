@@ -23,6 +23,7 @@ type SendNewPassword struct {
 
 // SendNewPassword :
 type RegisterCaptcha struct {
-	ID   int64  `json:"id"`
-	Path string `json:"path"`
+	ID              int64  `json:"id"`
+	Path            string `json:"path"`
+	PreviousFailure string `json:"-"`
 }

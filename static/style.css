@@ -170,3 +170,7 @@ input[type=checkbox] {
     padding-right: 6px;
     margin-right: 6px;
 }
+
+.error_message {
+    color: red;
+}

@@ -7,6 +7,17 @@ import (
 	"github.com/Matias-Barrios/QuizApp/models"
 )
 
+func MapErrorMessage(errorMessage string) string {
+	switch errorMessage {
+	case "1":
+		return "Wrong username or password"
+	case "2":
+		return "Invalid captcha"
+	default:
+		return ""
+	}
+}
+
 func validate(user_id int, quiz models.Quiz, solution *models.Solution) error {
 	for ix := range quiz.Questions {
 		for subix := range solution.Answers {

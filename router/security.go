@@ -40,7 +40,7 @@ func TokenHandler(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			log.Println(err.Error())
 		}
-		http.Redirect(w, r, "/login", 302)
+		http.Redirect(w, r, "/login?error=1", 302)
 		return
 	}
 	claims := &models.Claim{

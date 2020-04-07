@@ -71,7 +71,12 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 		errorHandler(w, r, http.StatusNotFound)
 		return
 	}
-	err := views.ViewLogin.Execute(w, nil)
+	lerror := models.LoginError{}
+	keys, ok := r.URL.Query()["error"]
+	if ok && len(keys[0]) > 0 {
+		lerror.Message = MapErrorMessage(keys[0])
+	}
+	err := views.ViewLogin.Execute(w, lerror)
 	if err != nil {
 		log.Println(err.Error())
 	}
@@ -161,6 +166,10 @@ func registerHandler(w http.ResponseWriter, r *http.Request) {
 		ID:   id,
 		Path: captchapath,
 	}
+	previousFailure, ok := r.URL.Query()["error"]
+	if ok && len(previousFailure) > 0 {
+		captcha.PreviousFailure = previousFailure[0]
+	}
 	err = views.ViewRegister.Execute(w, captcha)
 	if err != nil {
 		log.Println(err.Error())
@@ -197,7 +206,7 @@ func createUserHandler(w http.ResponseWriter, r *http.Request) {
 		} else {
 			log.Println(fmt.Sprintf("Failed to test captcha from %s with result %s", r.RemoteAddr, registerBody.Solution))
 		}
-		w.WriteHeader(http.StatusBadRequest)
+		http.Redirect(w, r, "/register?error=2", 302)
 		return
 	}
 	err = database.CreateUser(registerBody.Username, registerBody.Password, registerBody.Email)
